@@ -1,35 +1,34 @@
 package com.svalero.tourfrance.domain;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="teams")
+@Entity(name = "cyclists")
+public class Cyclist {
 
-public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
     private String name;
     @Column
-    private String country;
+    private int titles;
     @Column
-    private float budget;
+    private float weight;
     @Column
-    private boolean isActive;
-    @Column(name="fundation_date")
-    private LocalDate fundationDate;
+    private LocalDate birthdate;
+    @Column
+    private boolean isLeader;
 
-    @OneToMany(mappedBy = "team")
-    private List<Cyclist> cyclists;
-
-
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 }

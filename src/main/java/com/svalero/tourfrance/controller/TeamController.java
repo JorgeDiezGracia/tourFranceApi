@@ -1,12 +1,12 @@
 package com.svalero.tourfrance.controller;
 
 import com.svalero.tourfrance.domain.Team;
+import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,17 +17,29 @@ public class TeamController {
     private TeamService teamService;
 
     @GetMapping("/teams")
-    public List<Team> getAll() {
-        return teamService.getAll();
+    public ResponseEntity<List<Team>> getAll() {
+        return new ResponseEntity<>(teamService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/teams/:teamId")
+    public ResponseEntity<Team> getTeam(long teamId) throws TeamNotFoundException {
+        Team team = teamService.get(teamId);
+        return new ResponseEntity<>(team, HttpStatus.OK);
     }
 
     @PostMapping("/teams")
-    public void addTeam(Team team) {
-        teamService.add(team);
+    public ResponseEntity<Team> addTeam(@RequestBody Team team) {
+        return new ResponseEntity<>(teamService.add(team), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/teams/:teamId")
-    public void removeTeam(long teamId) {
+    public ResponseEntity<Void> removeTeam(long teamId) throws TeamNotFoundException{
         teamService.remove(teamId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Void> handleTeamNotFoundException(TeamNotFoundException exception) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

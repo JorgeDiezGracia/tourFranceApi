@@ -1,6 +1,7 @@
 package com.svalero.tourfrance.service;
 
 import com.svalero.tourfrance.domain.Team;
+import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,18 @@ public class TeamService {
         return allTeams;
     }
 
-    public void add(Team team) {
-         teamRepository.save(team);
+    public Team get(long id) throws TeamNotFoundException {
+        return teamRepository.findById(id)
+                .orElseThrow(TeamNotFoundException::new);
     }
 
-    public void remove(long id) {
+    public Team add(Team team) {
+         return teamRepository.save(team);
+    }
+
+    public void remove(long id) throws TeamNotFoundException{
+        teamRepository.findById(id)
+                .orElseThrow(TeamNotFoundException::new);
         teamRepository.deleteById(id);
-
     }
-
 }
