@@ -21,11 +21,11 @@ public class Team {
     @Column
     private String name;
     @Column
+    private String email;
+    @Column
     private String country;
     @Column
     private float budget;
-    @Column
-    private boolean isActive;
     @Column(name="fundation_date")
     private LocalDate fundationDate;
 

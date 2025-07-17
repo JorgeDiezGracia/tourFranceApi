@@ -1,0 +1,291 @@
+{
+  "v": 6,
+  "name": "tourFrance",
+  "folders": [
+    {
+      "v": 6,
+      "name": "teams",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "teams",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/teams",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/teams",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/:teamId",
+          "method": "DELETE",
+          "endpoint": "http://localhost:8080/teams/:teamId",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "33",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/:teamId",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/teams/:teamId",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "65",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "team/:teamId/cyclists",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/team/:teamId/cyclists",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_mcwa4byn_81594d73-4e19-4bf1-917c-bdec9e554e5d"
+    },
+    {
+      "v": 6,
+      "name": "cyclists",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "cyclists",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/cyclists",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/:teamId/cyclists",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/teams/:teamId/cyclists",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "65",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Enric\",\n  \"titles\": 6,\n  \"weight\": 50.0,\n  \"birthdate\": \"1995-10-03\",\n  \"leader\": true,\n  \n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists/:cyclistId",
+          "method": "DELETE",
+          "endpoint": "http://localhost:8080/cyclists/:cyclistId",
+          "params": [
+            {
+              "key": "cyclistId",
+              "value": "2",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists/:cyclistId",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/cyclists/:cyclistId",
+          "params": [
+            {
+              "key": "cyclistId",
+              "value": "1",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists/:cyclistId",
+          "method": "PUT",
+          "endpoint": "http://localhost:8080/cyclists/:cyclistId",
+          "params": [
+            {
+              "key": "cyclistId",
+              "value": "133",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n\"name\": \"paco\",\n  \"titles\": 6,\n  \"birthdate\": \"1995-10-03\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_md01buek_4a4cd913-4e88-4d5a-96c9-b63af62aa72f"
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [],
+  "_ref_id": "coll_mcwa3zlp_2768a33f-f3b4-4ecf-b999-63a36fbe920a"
+}

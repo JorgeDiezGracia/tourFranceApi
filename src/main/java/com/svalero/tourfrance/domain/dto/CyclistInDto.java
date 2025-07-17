@@ -12,8 +12,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CyclistInDto {
     //private long id;
-    @NotNull
+    @NotNull(message = "El campo name es obligatorio")
     private String name;
+    @NotNull(message = "El campo specialty es obligatorio")
+    private String specialty;
+    private String birthplace;
     @Min(value = 0)
     private int titles;
     //private float weight;

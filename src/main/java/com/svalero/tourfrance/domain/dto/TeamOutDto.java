@@ -1,5 +1,6 @@
 package com.svalero.tourfrance.domain.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,14 +10,11 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CyclistOutDto {
+public class TeamOutDto {
     private long id;
     private String name;
-    private String specialty;
-    private String birthplace;
-    private int titles;
-    //private float weight;
-    private LocalDate birthdate;
-    //private boolean isLeader;
-    private long teamId;
+    private String country;
+    private String email;
+    private float budget;
+    private LocalDate fundationDate;
 }

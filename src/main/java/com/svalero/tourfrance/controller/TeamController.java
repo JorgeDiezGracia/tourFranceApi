@@ -29,7 +29,8 @@ public class TeamController {
 
     @PostMapping("/teams")
     public ResponseEntity<Team> addTeam(@RequestBody Team team) {
-        return new ResponseEntity<>(teamService.add(team), HttpStatus.CREATED);
+        Team newTeam = teamService.add(team);
+        return new ResponseEntity<>(newTeam, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/teams/:teamId")
