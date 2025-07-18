@@ -7,11 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeamInDto {
+public class TeamRegistrationDto {
     //private long id;
     @NotNull(message = "El campo name es obligatorio")
     private String name;
@@ -21,5 +20,4 @@ public class TeamInDto {
     @Min(value = 0)
     private float budget;
     private LocalDate fundationDate;
-
 }

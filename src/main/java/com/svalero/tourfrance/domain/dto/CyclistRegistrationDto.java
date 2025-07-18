@@ -15,7 +15,7 @@ public class CyclistRegistrationDto {
         //private long id;
         @NotNull(message = "El campo name es obligatorio")
         private String name;
-        @NotNull(message = "El campos specialty es obligatorio")
+        @NotNull(message = "El campo specialty es obligatorio")
         private String specialty;
         private String birthplace;
         @Min(value = 0)

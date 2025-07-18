@@ -11,6 +11,12 @@ import java.util.List;
 public interface TeamRepository extends CrudRepository<Team, Long> {
 
     List<Team> findAll();
-   // List<Team> findByName(String name);
-    //List<Team> findByNameAndCountry(String name, String country);
+    List<Team> findByName(String name);
+    List<Team> findByCountry(String country);
+    List<Team> findByEmail(String email);
+    List<Team> findByNameAndCountry(String name, String country);
+    List<Team> findByNameAndEmail(String name, String email);
+    List<Team> findByCountryAndEmail(String country, String email);
+    List<Team> findByNameAndCountryAndEmail(String name, String country, String email);
+
 }

@@ -16,6 +16,7 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+
     @GetMapping("/teams")
     public ResponseEntity<List<Team>> getAll() {
         return new ResponseEntity<>(teamService.getAll(), HttpStatus.OK);
