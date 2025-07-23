@@ -50,7 +50,7 @@ public class TeamController {
     }
 
     @PostMapping("/teams")
-    public ResponseEntity<Team> addTeam(@Valid @RequestBody TeamRegistrationDto team) {
+    public ResponseEntity<TeamOutDto> addTeam(@Valid @RequestBody TeamRegistrationDto team) {
 
         logger.info("BEGIN addTeam");
     TeamOutDto newTeam = teamService.add(team);
