@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="teams")
-
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
