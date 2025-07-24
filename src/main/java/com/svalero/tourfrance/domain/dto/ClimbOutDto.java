@@ -16,7 +16,7 @@ public class ClimbOutDto {
     private String region;
     private int altitude;
     private float slope;
-    //private boolean goal;
+    private boolean goal;
     private LocalDate lastAscent;
     //private float longitude;
     //private float latitude;
