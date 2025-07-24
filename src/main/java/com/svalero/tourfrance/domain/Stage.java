@@ -31,9 +31,13 @@ public class Stage {
     private boolean mountainStage;
     @Column(name="stage_date")
     private LocalDate stageDate;
-
-    //@JsonBackReference(value = "stages_climbs")
-    //private List<Climb> climbs;
+//    @Column
+//    private double longitude;
+//    @Column
+//    private double latitude;
+    @OneToMany(mappedBy = "stage")
+    @JsonBackReference(value = "stages_climbs")
+    private List<Climb> climbs;
 
 
 }
