@@ -23,5 +23,7 @@ public class StageInDto {
     private float kilometers;
     private boolean mountainStage;
     private LocalDate stageDate;
+//    private double longitude;
+//    private double latitude;
 
 }

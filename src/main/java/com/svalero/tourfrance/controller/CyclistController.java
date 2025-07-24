@@ -44,10 +44,11 @@ public class CyclistController {
     public ResponseEntity<Cyclist> getCyclist(long cyclistId) throws CyclistNotFoundException {
         logger.info("BEGIN getCyclist");
         Cyclist cyclist = cyclistService.get(cyclistId);
-        logger.info("END.getCyclist");
+        logger.info("END getCyclist");
         return new ResponseEntity<>(cyclist, HttpStatus.OK);
     }
-
+//////("teams/{teamId}/cyclists") añadir antes de long teamId @PathVariable
+    /// modificar todos los :teamId por {teamId} y añadir @PathVariable
     @PostMapping("/teams/:teamId/cyclists")
     public ResponseEntity<CyclistOutDto> addCyclist(long teamId, @Valid @RequestBody CyclistRegistrationDto cyclist) throws TeamNotFoundException {
         logger.info("BEGIN addCyclist");

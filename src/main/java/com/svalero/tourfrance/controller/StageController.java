@@ -48,7 +48,7 @@ public class StageController {
     }
 
     @PostMapping("/stages")
-    public ResponseEntity<StageOutDto> addSTage(@Valid @RequestBody StageRegistrationDto stage) {
+    public ResponseEntity<StageOutDto> addStage(@Valid @RequestBody StageRegistrationDto stage) {
         logger.info("BEGIN addStage");
         StageOutDto newStage = stageService.add(stage);
         logger.info("END addStage");
