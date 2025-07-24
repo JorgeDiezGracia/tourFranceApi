@@ -29,6 +29,8 @@ public class Sponsor {
     private float funding;
     @Column(name="end_contract")
     private LocalDate endContract;
+    @Column
+    private boolean mainSponsor;
 
     @OneToMany(mappedBy = "team")
     @JsonBackReference(value = "teams_sponsors")
