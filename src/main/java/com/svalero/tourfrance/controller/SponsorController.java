@@ -31,7 +31,7 @@ public class SponsorController {
     private final Logger logger = LoggerFactory.getLogger(SponsorController.class);
 
     @GetMapping("/sponsors")
-    public ResponseEntity<List>SponsorOutDto>> getAll(@RequestParam(value = "name", defaultValue = "") String name,
+    public ResponseEntity<List<SponsorOutDto>> getAll(@RequestParam(value = "name", defaultValue = "") String name,
                                                       @RequestParam(value = "country", defaultValue = "") String country,
                                                       @RequestParam(value = "email", defaultValue = "") String email) {
 
@@ -65,7 +65,7 @@ public class SponsorController {
         return new ResponseEntity<>(modifiedSponsor, HttpStatus.OK);
     }
 
-    @DeleteMapping("/sponsors/sponsorId")
+    @DeleteMapping("/sponsors/:sponsorId")
     public ResponseEntity<Void> removeSponsor(long sponsorId) throws SponsorNotFoundException {
         logger.info("BEGIN removeSponsor");
         sponsorService.remove(sponsorId);
