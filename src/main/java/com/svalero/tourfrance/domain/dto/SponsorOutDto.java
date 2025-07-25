@@ -1,5 +1,5 @@
 package com.svalero.tourfrance.domain.dto;
-import jakarta.persistence.Column;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
