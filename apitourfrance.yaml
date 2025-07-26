@@ -15,16 +15,16 @@ tags:
   - name: sponsors
     description: Operaciones con puertos
 servers:
-  - url: 'https://api.mytourfrance.com'
+  - url: '//https://tourfrance.com'
 paths:
   /cyclists:
     get:
       tags:
         - cyclists
       summary: Devuelve los ciclistas registrados.
-      description: |   
+      description: |
         Devuelve un listado con los ciclistas solicitados dependiento de los filtros aplicados
-      
+        
         Se puede filtrar a través de cualquier de los filtros indicados name, specialty, birthplace incluso ambos al mismo tiempo
           - **name**: Filtra por nombre
           - **specialty**: Filtra por especialidad
@@ -47,7 +47,7 @@ paths:
           description: Filtro para especialidad del ciclista
           required: false
           schema:
-             type: string
+            type: string
       responses:
         '200':
           description: OK
@@ -57,6 +57,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CyclistOutDto'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /teams/{teamId}/cyclists:
+    post:
+      tags:
+        - cyclists
+      summary: Registra un ciclista
+      description: Dar de alta un nuevo ciclista según la información facilitada
+      parameters:
+        - name: teamId
+          in: path
+          description: Identificador del equipo al que pertenece el ciclista
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        description: Detalles del nuevo ciclista
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CyclistRegistrationDto'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CyclistOutDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
   /cyclists/{cyclistId}:
@@ -259,7 +290,6 @@ paths:
     post:
       tags:
         - climbs
-        - stages
       summary: Registra un puerto
       description: Dar de alta un nuevo puerto según la información facilitada
       parameters:
@@ -275,7 +305,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CyclistRegistrationDto'
+              $ref: '#/components/schemas/ClimbRegistrationDto'
       responses:
         '201':
           description: OK
@@ -412,26 +442,26 @@ paths:
       description: |
         Devuelve un listado con los equipos registrados dependiento de los filtros aplicados
 
-        Se puede filtrar a través de cualquier de los filtros indicados name, specialty, birthplace incluso ambos al mismo tiempo
+        Se puede filtrar a través de cualquier de los filtros indicados name, email, country incluso ambos al mismo tiempo
           - **name**: Filtra por nombre
-          - **specialty**: Filtra por especialidad
-          - **birthplace**: Filtra por lugar de nacimiento
+          - **email**: Filtra por email
+          - **country**: Filtra por lugar de country
       parameters:
         - name: name
           in: query
-          description: Filtro para nombre del ciclista
+          description: Filtro para nombre del equipo
           required: false
           schema:
             type: string
-        - name: specialty
+        - name: email
           in: query
-          description: Filtro para especialidad del ciclista
+          description: Filtro para el email del equipo
           required: false
           schema:
             type: string
-        - name: birthplace
+        - name: country
           in: query
-          description: Filtro para especialidad del ciclista
+          description: Filtro para el pais del equipo
           required: false
           schema:
             type: string
@@ -503,7 +533,7 @@ paths:
             type: number
             format: int64
       requestBody:
-        description: Nuevos detalles del ciclista
+        description: Nuevos detalles del equipo
         content:
           application/json:
             schema:
@@ -515,6 +545,156 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TeamOutDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /sponsors:
+    get:
+      tags:
+        - sponsors
+      summary: Devuelve los patrocinadores registrados.
+      description: |
+        Devuelve un listado con los patrocinadores solicitados dependiento de los filtros aplicados
+        
+        Se puede filtrar a través de cualquier de los filtros indicados name, specialty, birthplace incluso ambos al mismo tiempo
+          - **name**: Filtra por nombre
+          - **specialty**: Filtra por especialidad
+          - **birthplace**: Filtra por lugar de nacimiento
+      parameters:
+        - name: name
+          in: query
+          description: Filtro para nombre del ciclista
+          required: false
+          schema:
+            type: string
+        - name: specialty
+          in: query
+          description: Filtro para especialidad del ciclista
+          required: false
+          schema:
+            type: string
+        - name: birthplace
+          in: query
+          description: Filtro para especialidad del ciclista
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SponsorOutDto'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /teams/{teamId}/sponsors:
+    post:
+      tags:
+        - sponsors
+      summary: Registra un sponsor
+      description: Dar de alta un nuevo sponsor según la información facilitada
+      parameters:
+        - name: teamId
+          in: path
+          description: Identificador del equipo al que pertenece el sponsor
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        description: Detalles del nuevo sponsor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SponsorRegistrationDto'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SponsorOutDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /sponsors/{sponsorId}:
+    get:
+      tags:
+        - sponsors
+      summary: Detalle de un sponsor
+      description: Devuelve los detalles de un sponsor específico
+      parameters:
+        - name: sponsorId
+          in: path
+          description: Identificador del sponsor
+          required: true
+          schema:
+            type: number
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SponsorOutDto'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - sponsors
+      summary: Elimina un sponsor
+      description: Dar de baja el sponsor cuyo id se pasa como parámetro
+      parameters:
+        - name: sponsorId
+          in: path
+          description: Identificador del sponsor
+          required: true
+          schema:
+            type: number
+            format: int64
+      responses:
+        '204':
+          description: No content
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - sponsors
+      summary: Modifica un sponsor
+      description: Permite modificar algunos detalles de un sponsor
+      parameters:
+        - name: sponsorId
+          in: path
+          description: Identificador del sponsor
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        description: Nuevos detalles del sponsor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SponsorInDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SponsorOutDto'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -657,14 +837,14 @@ components:
         - $ref: '#/components/schemas/Team'
     TeamOutDto:
       allOf:
-      - $ref: '#/components/schemas/Team'
-      - type: object
-        properties:
-          id:
-            type: number
-            format: int64
-            description: Identificador único del equipo
-            example: 65
+        - $ref: '#/components/schemas/Team'
+        - type: object
+          properties:
+            id:
+              type: number
+              format: int64
+              description: Identificador único del equipo
+              example: 65
       example:
         id: 95
         name: UAE
@@ -735,6 +915,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/InternalServerError'
+
 
 
 
