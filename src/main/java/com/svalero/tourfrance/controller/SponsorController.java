@@ -41,32 +41,32 @@ public class SponsorController {
         return new ResponseEntity<>(sponsors, HttpStatus.OK);
     }
 
-    @GetMapping("/sponsors/:sponsorId")
-    public ResponseEntity<Sponsor> getSponsor(long sponsorId) throws SponsorNotFoundException {
+    @GetMapping("/sponsors/{sponsorId}")
+    public ResponseEntity<Sponsor> getSponsor(@PathVariable long sponsorId) throws SponsorNotFoundException {
         logger.info("BEGIN getSponsor");
         Sponsor sponsor = sponsorService.get(sponsorId);
         logger.info("END getSponsor");
         return new ResponseEntity<>(sponsor, HttpStatus.OK);
     }
 
-    @PostMapping("/teams/:teamId/sponsors")
-    public ResponseEntity<SponsorOutDto> addSponsor(long teamId, @Valid @RequestBody SponsorRegistrationDto sponsor) throws TeamNotFoundException {
+    @PostMapping("/teams/{teamId}/sponsors")
+    public ResponseEntity<SponsorOutDto> addSponsor(@PathVariable long teamId, @Valid @RequestBody SponsorRegistrationDto sponsor) throws TeamNotFoundException {
         logger.info("BEGIN addSponsor");
         SponsorOutDto newSponsor = sponsorService.add(teamId, sponsor);
         logger.info("END addSponsor");
         return new ResponseEntity<>(newSponsor, HttpStatus.CREATED);
     }
 
-    @PutMapping("/sponsors/:sponsorId")
-    public ResponseEntity<SponsorOutDto> modifySponsor(long sponsorId, @Valid @RequestBody SponsorInDto sponsor) throws SponsorNotFoundException, TeamNotFoundException {
+    @PutMapping("/sponsors/{sponsorId}")
+    public ResponseEntity<SponsorOutDto> modifySponsor(@PathVariable long sponsorId, @Valid @RequestBody SponsorInDto sponsor) throws SponsorNotFoundException, TeamNotFoundException {
         logger.info("BEGIN modifySponsor");
         SponsorOutDto modifiedSponsor = sponsorService.modify(sponsorId, sponsor);
         logger.info("END modifySponsor");
         return new ResponseEntity<>(modifiedSponsor, HttpStatus.OK);
     }
 
-    @DeleteMapping("/sponsors/:sponsorId")
-    public ResponseEntity<Void> removeSponsor(long sponsorId) throws SponsorNotFoundException {
+    @DeleteMapping("/sponsors/{sponsorId}")
+    public ResponseEntity<Void> removeSponsor(@PathVariable long sponsorId) throws SponsorNotFoundException {
         logger.info("BEGIN removeSponsor");
         sponsorService.remove(sponsorId);
         logger.info("END removeSponsor");

@@ -42,32 +42,32 @@ public class ClimbController {
         return new ResponseEntity<>(climbs, HttpStatus.OK);
     }
 
-    @GetMapping("climbs/:climbId")
-    public ResponseEntity<Climb> getClimb(long climbId) throws ClimbNotFoundException {
+    @GetMapping("climbs/{climbId}")
+    public ResponseEntity<Climb> getClimb(@PathVariable long climbId) throws ClimbNotFoundException {
         logger.info("BEGIN getClimb");
         Climb climb = climbService.get(climbId);
         logger.info("END getClimb");
         return new ResponseEntity<>(climb, HttpStatus.OK);
     }
 
-    @PostMapping("/stages/:stageId/climbs")
-    public ResponseEntity<ClimbOutDto> addClimb(long stageId, @Valid @RequestBody ClimbRegistrationDto climb) throws StageNotFoundException {
+    @PostMapping("/stages/{stageId}/climbs")
+    public ResponseEntity<ClimbOutDto> addClimb(@PathVariable long stageId, @Valid @RequestBody ClimbRegistrationDto climb) throws StageNotFoundException {
         logger.info("BEGIN addClimb");
         ClimbOutDto newClimb = climbService.add(stageId, climb);
         logger.info("END addClimb");
         return new ResponseEntity<>(newClimb, HttpStatus.CREATED);
     }
 
-    @PutMapping("/climbs/:climbId")
-    public ResponseEntity<ClimbOutDto> modifyClimb(long climbId, @Valid @RequestBody ClimbInDto climb) throws ClimbNotFoundException, StageNotFoundException {
+    @PutMapping("/climbs/{climbId}")
+    public ResponseEntity<ClimbOutDto> modifyClimb(@PathVariable long climbId, @Valid @RequestBody ClimbInDto climb) throws ClimbNotFoundException, StageNotFoundException {
         logger.info("BEGIN modifyClimb");
         ClimbOutDto modifiedClimb = climbService.modify(climbId, climb);
         logger.info("END modifyClimb");
         return new ResponseEntity<>(modifiedClimb, HttpStatus.OK);
     }
 
-    @DeleteMapping("/climbs/:climbId")
-    public ResponseEntity<Void> removeClimb(long climbId) throws ClimbNotFoundException{
+    @DeleteMapping("/climbs/{climbId}")
+    public ResponseEntity<Void> removeClimb(@PathVariable long climbId) throws ClimbNotFoundException{
         logger.info("BEGIN removeClimb");
         climbService.remove(climbId);
         logger.info("END removeClimb");
