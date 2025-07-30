@@ -356,7 +356,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TeamOutDto'
+                  $ref: '#/components/schemas/StageOutDto'
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -369,14 +369,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Team'
+              $ref: '#/components/schemas/Stage'
       responses:
         '201':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamOutDto'
+                $ref: '#/components/schemas/StageOutDto'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -420,14 +420,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TeamInDto'
+              $ref: '#/components/schemas/StageInDto'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamOutDto'
+                $ref: '#/components/schemas/StageOutDto'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -559,26 +559,26 @@ paths:
       description: |
         Devuelve un listado con los patrocinadores solicitados dependiento de los filtros aplicados
         
-        Se puede filtrar a través de cualquier de los filtros indicados name, specialty, birthplace incluso ambos al mismo tiempo
+        Se puede filtrar a través de cualquier de los filtros indicados name, country, email incluso ambos al mismo tiempo
           - **name**: Filtra por nombre
-          - **specialty**: Filtra por especialidad
-          - **birthplace**: Filtra por lugar de nacimiento
+          - **country**: Filtra por país
+          - **email**: Filtra por email
       parameters:
         - name: name
           in: query
-          description: Filtro para nombre del ciclista
+          description: Filtro para nombre del del sponsor
           required: false
           schema:
             type: string
-        - name: specialty
+        - name: country
           in: query
-          description: Filtro para especialidad del ciclista
+          description: Filtro por país de procedencia del sponsor
           required: false
           schema:
             type: string
-        - name: birthplace
+        - name: email
           in: query
-          description: Filtro para especialidad del ciclista
+          description: Filtro para email del sponsor
           required: false
           schema:
             type: string
@@ -835,6 +835,9 @@ components:
     TeamInDto:
       allOf:
         - $ref: '#/components/schemas/Team'
+    TeamRegistrationDto:
+      allOf:
+        - $ref: '#/components/schemas/Team'
     TeamOutDto:
       allOf:
         - $ref: '#/components/schemas/Team'
@@ -852,6 +855,57 @@ components:
         country: Emirates
         budget: 240
         fundationDate: 2015/12/30
+    Stage:
+      type: object
+      properties:
+        departure:
+          type: string
+          description: Ciudad de salida de la etapa
+        arrival:
+          type: string
+          description: Ciudad de llegada de la etapa
+        type:
+          type: string
+          description: Tipo de etapa (cronoescalada, montaña, contrarreloj...)
+        elevation:
+          type: number
+          format: int64
+          description: elevación ganada en metros
+        kilometers:
+          type: number
+          format: int64
+          description: distancia de la etapa en kilómetros
+        mountainStage:
+          type: boolean
+          description: indica si es etapa de montaña
+        stageDate:
+          type: string
+          format: date
+          description: fecha en la que se realiza la etapa
+      example:
+        departure: Burdeos
+        arrival: Paris
+        type: llana
+        elevation: 1.800
+        kilometers: 194
+        mountaingStage: false
+        stageDate: 2025-07-07
+    StageInDto:
+      allOf:
+        - $ref: '#/components/schemas/Stage'
+    StageRegistrationDto:
+      allOf:
+        - $ref: '#/components/schemas/Stage'
+    StageOutDto:
+      allOf:
+        - $ref: '#/components/schemas/Stage'
+        - type: object
+          properties:
+            id:
+              type: number
+              format: int64
+              description: Identificador de la etapa
+              example: 7
     ErrorResponse:
       type: object
       properties:
