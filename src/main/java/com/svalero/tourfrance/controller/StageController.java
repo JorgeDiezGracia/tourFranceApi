@@ -39,8 +39,8 @@ public class StageController {
         return new ResponseEntity<>(stages, HttpStatus.OK);
     }
 
-    @GetMapping("/stages/:stageId")
-    public ResponseEntity<Stage> getStage(long stageId) throws StageNotFoundException {
+    @GetMapping("/stages/{stageId}")
+    public ResponseEntity<Stage> getStage(@PathVariable long stageId) throws StageNotFoundException {
         logger.info("BEGIN getStage");
         Stage stage = stageService.get(stageId);
         logger.info("END getSTage");
@@ -55,8 +55,8 @@ public class StageController {
         return new ResponseEntity<>(newStage, HttpStatus.CREATED);
     }
 
-    @PutMapping("/stages/:stageId")
-    public ResponseEntity<StageOutDto> modifyStage(long stageId, @Valid @RequestBody StageInDto stage) throws StageNotFoundException {
+    @PutMapping("/stages/{stageId}")
+    public ResponseEntity<StageOutDto> modifyStage(@PathVariable long stageId, @Valid @RequestBody StageInDto stage) throws StageNotFoundException {
         logger.info("BEGIN modifyStage");
         StageOutDto modifiedStage = stageService.modify(stageId, stage);
         logger.info("END modifyStage");
@@ -64,8 +64,8 @@ public class StageController {
 
     }
 
-    @DeleteMapping("/stages/:stageId")
-    public ResponseEntity<Void> removeStage(long stageId) throws StageNotFoundException {
+    @DeleteMapping("/stages/{stageId}")
+    public ResponseEntity<Void> removeStage(@PathVariable long stageId) throws StageNotFoundException {
         logger.info("BEGIN removeSTage");
         stageService.remove(stageId);
         logger.info("END removeStage");

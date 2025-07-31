@@ -41,8 +41,8 @@ public class TeamController {
     }
 
 
-    @GetMapping("/teams/:teamId")
-    public ResponseEntity<Team> getTeam(long teamId) throws TeamNotFoundException {
+    @GetMapping("/teams/{teamId}")
+    public ResponseEntity<Team> getTeam(@PathVariable long teamId) throws TeamNotFoundException {
         logger.info("BEGIN getTeam");
         Team team = teamService.get(teamId);
         logger.info("END getTeam");
@@ -59,16 +59,16 @@ public class TeamController {
 
 }
 
-    @PutMapping("/teams/:teamId")
-    public ResponseEntity<TeamOutDto> modifyTeam(long teamId, @Valid @RequestBody TeamInDto team) throws TeamNotFoundException{
+    @PutMapping("/teams/{teamId}")
+    public ResponseEntity<TeamOutDto> modifyTeam(@PathVariable long teamId, @Valid @RequestBody TeamInDto team) throws TeamNotFoundException{
     logger.info("BEGIN modifyTeam");
     TeamOutDto modifiedTeam = teamService.modify(teamId, team);
     logger.info("END modifyTeam");
     return new ResponseEntity<>(modifiedTeam, HttpStatus.OK);
         }
 
-    @DeleteMapping("/teams/:teamId")
-    public ResponseEntity<Void> removeTeam(long teamId) throws TeamNotFoundException{
+    @DeleteMapping("/teams/{teamId}")
+    public ResponseEntity<Void> removeTeam(@PathVariable long teamId) throws TeamNotFoundException{
     logger.info("BEGIN removeTeam");
     teamService.remove(teamId);
     logger.info("END removeTeam");

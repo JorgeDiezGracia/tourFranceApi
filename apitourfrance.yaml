@@ -13,7 +13,7 @@ tags:
   - name: stages
     description: Operaciones con etapas
   - name: sponsors
-    description: Operaciones con puertos
+    description: Operaciones con patrocinadores
 servers:
   - url: '//https://tourfrance.com'
 paths:
@@ -356,7 +356,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TeamOutDto'
+                  $ref: '#/components/schemas/StageOutDto'
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -369,14 +369,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Team'
+              $ref: '#/components/schemas/Stage'
       responses:
         '201':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamOutDto'
+                $ref: '#/components/schemas/StageOutDto'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -420,14 +420,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TeamInDto'
+              $ref: '#/components/schemas/StageInDto'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TeamOutDto'
+                $ref: '#/components/schemas/StageOutDto'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -559,26 +559,26 @@ paths:
       description: |
         Devuelve un listado con los patrocinadores solicitados dependiento de los filtros aplicados
         
-        Se puede filtrar a través de cualquier de los filtros indicados name, specialty, birthplace incluso ambos al mismo tiempo
+        Se puede filtrar a través de cualquier de los filtros indicados name, country, email incluso ambos al mismo tiempo
           - **name**: Filtra por nombre
-          - **specialty**: Filtra por especialidad
-          - **birthplace**: Filtra por lugar de nacimiento
+          - **country**: Filtra por país
+          - **email**: Filtra por email
       parameters:
         - name: name
           in: query
-          description: Filtro para nombre del ciclista
+          description: Filtro para nombre del del sponsor
           required: false
           schema:
             type: string
-        - name: specialty
+        - name: country
           in: query
-          description: Filtro para especialidad del ciclista
+          description: Filtro por país de procedencia del sponsor
           required: false
           schema:
             type: string
-        - name: birthplace
+        - name: email
           in: query
-          description: Filtro para especialidad del ciclista
+          description: Filtro para email del sponsor
           required: false
           schema:
             type: string
@@ -703,66 +703,177 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    CyclistInDto:
+    Climb:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del puerto
+        category:
+          type: string
+          description: Categoría del puerto por dificultad
+        region:
+          type: string
+          description: Región a la que pertenece el puerto
+        altitude:
+          type: number
+          format: int64
+          description: altitud máxima en cima del puerto
+        slope:
+          type: number
+          format: int64
+          description: pendiente media de elevación
+        goal:
+          type: boolean
+          description: es final de etapa
+        lastAscent:
+          type: string
+          format: date
+          description: última fecha en la que se ascendió el puerto en el Tour
+        longitude:
+          type: number
+          format: int64
+          description: coordenadas de longitud del punto donde se inicia el puerto
+        latitude:
+          type: number
+          format: int64
+          description: coordenadas de latitud del punto donde se inicia el puerto
+      example:
+        name: Tourmalet
+        category: Hors Category
+        region: Francia
+        altitude: 1.640
+        slope: 7.2
+        goal: false
+        lasAscent: 2024-07-14
+        longitude: 47.32547
+        latitude: 0.746589
+    ClimbInDto:
+      allOf:
+        - $ref: '#/components/schemas/Climb'
+    ClimbRegistrationDto:
+      allOf:
+        - $ref: '#/components/schemas/Climb'
+    ClimbOutDto:
+      allOf:
+        - $ref: '#/components/schemas/Climb'
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: identificador del puerto
+          example: 4
+        stageId:
+          type: number
+          format: int64
+          description: identificado de la etapa a la que pertenece el puerto
+          example: 7
+    Sponsor:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del sponsor
+        country:
+          type: string
+          description: país del sponsor
+        email:
+          type: string
+          description: correo electrónico del sponsor
+        employees:
+          type: number
+          format: int64
+          description: número de empleados que tiene el sponsor
+        funding:
+          type: number
+          format: int64
+          description: importe que destina al patrocinio
+        endContract:
+          type: string
+          format: date
+          description: fecha fin de patrocinio firmado
+        mainSponsor:
+          type: boolean
+          format: string
+          description: si es patrocinador principal
+      example:
+        name: Ineos
+        country: United Kingdom
+        email: ineosgranadiers@ineos.com
+        employees: 4.214
+        funding: 124
+        endContract: 2027-12-30
+        mainSponsor: true
+    SponsorInDto:
+      allOf:
+        - $ref: '#/components/schemas/Sponsor'
+    SponsorRegistrationDto:
+      allOf:
+        - $ref: '#/components/schemas/Sponsor'
+      type: object
+      properties:
+        teamId:
+          type: number
+          format: int64
+          description: identificador del equipo al que patrocina el sponsor
+          example: 23
+    SponsorOutDto:
+      allOf:
+        - $ref: '#/components/schemas/SponsorRegistrationDto'
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: identificador del sponsor
+          example: 47
+    Cyclist:
       type: object
       properties:
         name:
           type: string
           description: Nombre del ciclista
-          example: Pogaçar
         specialty:
           type: string
           description: Especialidad del ciclista
-          example: Escalador
         birthplace:
           type: string
           description: Lugar de nacimiento del ciclista
-          example: Denmark
         titles:
           type: number
           format: int64
           description: Titulos ganador por el ciclista
-          example: 10
         birthdate:
           type: string
           format: date
           description: Fecha de nacimiento del ciclista
-          example: 2000-12-30
+      example:
+        name: Pogaçar
+        specialty: Escalador
+        birthplace: Denmark
+        titles: 10
+        birthdate: 2000-12-30
+    CyclistInDto:
+      allOf:
+        - $ref: '#/components/schemas/Cyclist'
     CyclistRegistrationDto:
+      allOf:
+        - $ref: '#/components/schemas/Cyclist'
       type: object
       properties:
-        name:
-          type: string
-          description: Nombre del ciclista
-          example: Pogaçar
-        specialty:
-          type: string
-          description: Especialidad del ciclista
-          example: Escalador
-        birthplace:
-          type: string
-          description: Lugar de nacimiento del ciclista
-          example: Denmark
-        titles:
-          type: number
-          format: int64
-          description: Titulos ganados por el ciclista
-          example: 10
         weight:
           type: number
           format: float
           description: Peso del ciclista
           example: 62
-        birthdate:
-          type: string
-          format: date
-          description: Fecha de nacimiento del ciclista
-          example: 2000-12-30
         isLeader:
           type: boolean
           description: Está activo o no el ciclista
           example: true
     CyclistOutDto:
+      allOf:
+        - $ref: '#/components/schemas/Cyclist'
       type: object
       properties:
         id:
@@ -770,33 +881,6 @@ components:
           format: int64
           description: El identificador del ciclista
           example: 1
-        name:
-          type: string
-          description: Nombre del ciclista
-          example: Pogaçar
-        specialty:
-          type: string
-          description: Especialidad del ciclista
-          example: Escalador
-        birthplace:
-          type: string
-          description: Lugar de nacimiento del ciclista
-          example: Denmark
-        titles:
-          type: number
-          format: int64
-          description: Titulos ganador por el ciclista
-          example: 10
-        weight:
-          type: number
-          format: float
-          description: Peso del ciclista
-          example: 62
-        birthdate:
-          type: string
-          format: date
-          description: Fecha de nacimiento del ciclista
-          example: 2000-12-30
         isLeader:
           type: boolean
           description: Está activo o no el ciclista
@@ -835,6 +919,9 @@ components:
     TeamInDto:
       allOf:
         - $ref: '#/components/schemas/Team'
+    TeamRegistrationDto:
+      allOf:
+        - $ref: '#/components/schemas/Team'
     TeamOutDto:
       allOf:
         - $ref: '#/components/schemas/Team'
@@ -852,6 +939,57 @@ components:
         country: Emirates
         budget: 240
         fundationDate: 2015/12/30
+    Stage:
+      type: object
+      properties:
+        departure:
+          type: string
+          description: Ciudad de salida de la etapa
+        arrival:
+          type: string
+          description: Ciudad de llegada de la etapa
+        type:
+          type: string
+          description: Tipo de etapa (cronoescalada, montaña, contrarreloj...)
+        elevation:
+          type: number
+          format: int64
+          description: elevación ganada en metros
+        kilometers:
+          type: number
+          format: int64
+          description: distancia de la etapa en kilómetros
+        mountainStage:
+          type: boolean
+          description: indica si es etapa de montaña
+        stageDate:
+          type: string
+          format: date
+          description: fecha en la que se realiza la etapa
+      example:
+        departure: Burdeos
+        arrival: Paris
+        type: llana
+        elevation: 1.800
+        kilometers: 194
+        mountaingStage: false
+        stageDate: 2025-07-07
+    StageInDto:
+      allOf:
+        - $ref: '#/components/schemas/Stage'
+    StageRegistrationDto:
+      allOf:
+        - $ref: '#/components/schemas/Stage'
+    StageOutDto:
+      allOf:
+        - $ref: '#/components/schemas/Stage'
+        - type: object
+          properties:
+            id:
+              type: number
+              format: int64
+              description: Identificador de la etapa
+              example: 7
     ErrorResponse:
       type: object
       properties:

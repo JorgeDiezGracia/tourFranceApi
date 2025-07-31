@@ -40,8 +40,8 @@ public class CyclistController {
         return new ResponseEntity<>(cyclists, HttpStatus.OK);
     }
 
-    @GetMapping("/cyclists/:cyclistId")
-    public ResponseEntity<Cyclist> getCyclist(long cyclistId) throws CyclistNotFoundException {
+    @GetMapping("/cyclists/{cyclistId}")
+    public ResponseEntity<Cyclist> getCyclist(@PathVariable long cyclistId) throws CyclistNotFoundException {
         logger.info("BEGIN getCyclist");
         Cyclist cyclist = cyclistService.get(cyclistId);
         logger.info("END getCyclist");
@@ -49,24 +49,24 @@ public class CyclistController {
     }
 //////("teams/{teamId}/cyclists") añadir antes de long teamId @PathVariable
     /// modificar todos los :teamId por {teamId} y añadir @PathVariable
-    @PostMapping("/teams/:teamId/cyclists")
-    public ResponseEntity<CyclistOutDto> addCyclist(long teamId, @Valid @RequestBody CyclistRegistrationDto cyclist) throws TeamNotFoundException {
+    @PostMapping("/teams/{teamId}/cyclists")
+    public ResponseEntity<CyclistOutDto> addCyclist(@PathVariable long teamId, @Valid @RequestBody CyclistRegistrationDto cyclist) throws TeamNotFoundException {
         logger.info("BEGIN addCyclist");
         CyclistOutDto newCyclist = cyclistService.add(teamId, cyclist);
         logger.info("END addCyclist");
         return new ResponseEntity<>(newCyclist, HttpStatus.CREATED);
     }
 
-    @PutMapping("/cyclists/:cyclistId")
-    public ResponseEntity<CyclistOutDto> modifyCyclist(long cyclistId, @Valid @RequestBody CyclistInDto cyclist) throws CyclistNotFoundException, TeamNotFoundException {
+    @PutMapping("/cyclists/{cyclistId}")
+    public ResponseEntity<CyclistOutDto> modifyCyclist(@PathVariable long cyclistId, @Valid @RequestBody CyclistInDto cyclist) throws CyclistNotFoundException, TeamNotFoundException {
         logger.info("BEGIN modifyCyclist");
         CyclistOutDto modifiedCyclist = cyclistService.modify(cyclistId, cyclist);
         logger.info("END modifyCyclist");
         return new ResponseEntity<>(modifiedCyclist, HttpStatus.OK);
     }
 
-    @DeleteMapping("/cyclists/:cyclistId")
-    public ResponseEntity<Void> removeCyclist(long cyclistId) throws CyclistNotFoundException{
+    @DeleteMapping("/cyclists/{cyclistId}")
+    public ResponseEntity<Void> removeCyclist(@PathVariable long cyclistId) throws CyclistNotFoundException{
         logger.info("BEGIN removeCyclist");
         cyclistService.remove(cyclistId);
         logger.info("END removeCyclist");
