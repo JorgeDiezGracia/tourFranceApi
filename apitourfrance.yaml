@@ -13,7 +13,7 @@ tags:
   - name: stages
     description: Operaciones con etapas
   - name: sponsors
-    description: Operaciones con puertos
+    description: Operaciones con patrocinadores
 servers:
   - url: '//https://tourfrance.com'
 paths:
