@@ -52,7 +52,7 @@ public class CyclistService {
         List<CyclistOutDto> cyclistOutDtos = modelMapper.map(cyclistList, new TypeToken<List<CyclistOutDto>>() {}.getType());
         return cyclistOutDtos;
     }
-
+    // no sería necesario pasar test
     public Cyclist get(long id) throws CyclistNotFoundException {
         return cyclistRepository.findById(id)
                 .orElseThrow(CyclistNotFoundException::new);
