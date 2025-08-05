@@ -94,6 +94,8 @@ public class CyclistService {
                 .orElseThrow(CyclistNotFoundException::new);
         cyclistRepository.deleteById(id);
     }
+
+
 }
 
 

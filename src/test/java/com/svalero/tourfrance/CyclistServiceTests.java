@@ -2,8 +2,10 @@ package com.svalero.tourfrance;
 
 import com.svalero.tourfrance.domain.Cyclist;
 import com.svalero.tourfrance.domain.Team;
+import com.svalero.tourfrance.domain.dto.CyclistInDto;
 import com.svalero.tourfrance.domain.dto.CyclistOutDto;
 import com.svalero.tourfrance.domain.dto.CyclistRegistrationDto;
+import com.svalero.tourfrance.exception.CyclistNotFoundException;
 import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.CyclistRepository;
 import com.svalero.tourfrance.repository.TeamRepository;
@@ -16,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
 
 import java.time.LocalDate;
@@ -24,8 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.apache.logging.log4j.util.LambdaUtil.getAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -335,6 +337,66 @@ public class CyclistServiceTests {
     }
 
     @Test
+    void testModify() throws CyclistNotFoundException, TeamNotFoundException {
+        // Arrange
+        long cyclistId = 1;
+        long teamId = 100;
+
+        CyclistInDto cyclistInDto = new CyclistInDto();
+        cyclistInDto.setTeamId(teamId);
+        cyclistInDto.setName("Updated Name");
+
+        Cyclist existingCyclist = new Cyclist();
+        existingCyclist.setId(cyclistId);
+
+        Team team = new Team();
+        team.setId(teamId);
+
+        Cyclist updatedCyclist = new Cyclist(); // after mapping
+        updatedCyclist.setId(cyclistId);
+        updatedCyclist.setTeam(team);
+        updatedCyclist.setName("Updated Name");
+
+        CyclistOutDto expectedOutDto = new CyclistOutDto();
+        expectedOutDto.setId(cyclistId);
+        expectedOutDto.setName("Updated Name");
+
+        // Mocking behavior
+        when(cyclistRepository.findById(cyclistId)).thenReturn(Optional.of(existingCyclist));
+        when(teamRepository.findById(teamId)).thenReturn(Optional.of(team));
+
+        // ✅ Mock de TypeMap para evitar NullPointer
+        TypeMap<CyclistInDto, Cyclist> mockTypeMap = mock(TypeMap.class);
+        when(modelMapper.typeMap(CyclistInDto.class, Cyclist.class)).thenReturn(mockTypeMap);
+
+
+        // Mapping input DTO to entity
+        doAnswer(invocation -> {
+            CyclistInDto source = invocation.getArgument(0);
+            Cyclist target = invocation.getArgument(1);
+            target.setName(source.getName()); // simulate mapping
+            return null;
+        }).when(modelMapper).map(eq(cyclistInDto), eq(existingCyclist));
+
+        // Output DTO mapping
+        when(modelMapper.map(existingCyclist, CyclistOutDto.class)).thenReturn(expectedOutDto);
+
+        // Act
+        CyclistOutDto result = cyclistService.modify(cyclistId, cyclistInDto);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(expectedOutDto.getId(), result.getId());
+        assertEquals(expectedOutDto.getName(), result.getName());
+
+        verify(cyclistRepository).findById(cyclistId);
+        verify(teamRepository).findById(teamId);
+        verify(modelMapper).map(cyclistInDto, existingCyclist);
+        verify(cyclistRepository).save(existingCyclist);
+        verify(modelMapper).map(existingCyclist, CyclistOutDto.class);
+    }
+
+    @Test
     public void testAddTeamNotFound() throws TeamNotFoundException {
         long teamId = 150;
         CyclistRegistrationDto cyclistRegistrationDto = new CyclistRegistrationDto("Pogaçar", "escalador", "Eslovenia", 101, 64, LocalDate.now(), true, 98);
@@ -345,4 +407,62 @@ public class CyclistServiceTests {
         }
         assertThrows(TeamNotFoundException.class, () -> cyclistService.add(teamId, cyclistRegistrationDto));
     }
+
+    @Test
+    public void testModifyCyclistNotFound() throws CyclistNotFoundException, TeamNotFoundException {
+        long cyclistId = 1;
+        CyclistInDto cyclistInDto = new CyclistInDto();
+        cyclistInDto.setTeamId(100);
+
+        try {
+            when(cyclistRepository.findById(cyclistId).orElseThrow(CyclistNotFoundException::new))
+                    .thenThrow(CyclistNotFoundException.class);
+        } catch (CyclistNotFoundException e) {
+
+        }
+
+        assertThrows(CyclistNotFoundException.class, () -> cyclistService.modify(cyclistId, cyclistInDto));
+    }
+
+    @Test
+    public void testModifyTeamNotFound() throws CyclistNotFoundException, TeamNotFoundException {
+        long cyclistId = 1;
+        long teamId = 200;
+
+        CyclistInDto cyclistInDto = new CyclistInDto();
+        cyclistInDto.setTeamId(teamId);
+
+        Cyclist existingCyclist = new Cyclist();
+        existingCyclist.setId(cyclistId);
+
+        when(cyclistRepository.findById(cyclistId)).thenReturn(Optional.of(existingCyclist));
+
+        try {
+            when(teamRepository.findById(teamId).orElseThrow(TeamNotFoundException::new))
+                    .thenThrow(TeamNotFoundException.class);
+        } catch (TeamNotFoundException e) {
+
+        }
+
+        assertThrows(TeamNotFoundException.class, () -> cyclistService.modify(cyclistId, cyclistInDto));
+    }
+
+    @Test
+    public void testRemoveCyclist() throws CyclistNotFoundException {
+        long cyclistId = 1;
+
+        Cyclist cyclist = new Cyclist();
+        cyclist.setId(cyclistId);
+
+        // Simula que el ciclista existe
+        when(cyclistRepository.findById(cyclistId)).thenReturn(Optional.of(cyclist));
+
+        // Act
+        cyclistService.remove(cyclistId);
+
+        // Assert
+        verify(cyclistRepository).findById(cyclistId);
+        verify(cyclistRepository).deleteById(cyclistId);
+    }
+
 }
