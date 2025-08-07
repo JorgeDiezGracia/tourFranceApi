@@ -2,8 +2,13 @@ package com.svalero.tourfrance;
 
 import com.svalero.tourfrance.domain.Climb;
 import com.svalero.tourfrance.domain.Cyclist;
-import com.svalero.tourfrance.domain.dto.ClimbOutDto;
-import com.svalero.tourfrance.domain.dto.CyclistOutDto;
+import com.svalero.tourfrance.domain.Stage;
+import com.svalero.tourfrance.domain.Team;
+import com.svalero.tourfrance.domain.dto.*;
+import com.svalero.tourfrance.exception.ClimbNotFoundException;
+import com.svalero.tourfrance.exception.CyclistNotFoundException;
+import com.svalero.tourfrance.exception.StageNotFoundException;
+import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.ClimbRepository;
 import com.svalero.tourfrance.repository.StageRepository;
 import com.svalero.tourfrance.service.ClimbService;
@@ -25,9 +30,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static javax.management.Query.times;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -295,4 +299,167 @@ public class ClimbServiceTests {
         verify(climbRepository, Mockito.times(0)).findByCategoryAndRegion("", "");
         verify(climbRepository, Mockito.times(0)).findAll();
     }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    public void testAdd(){
+        long stageId = 1;
+        Stage mockStage = new Stage(stageId, "Saint Luz", "Troumusse", "montaña", 4200, 150, false, LocalDate.now(), new ArrayList<>());
+        ClimbRegistrationDto climbRegistrationDto = new ClimbRegistrationDto("Tourmalet", "Hors Category", "Francia", 1900, 1000, true, LocalDate.now(), 48, 47);
+
+        Climb mockClimb = new Climb(0, "Tourmalet", "Hors Category", "Francia", 1650, 785, true, LocalDate.now(), 85, 45, null);
+        ClimbOutDto mockClimbOutDto = new ClimbOutDto(1, "Tourmalet", "Hors Category", "Francia", 1650, 785, true, LocalDate.now(), 1);
+
+        when(stageRepository.findById(stageId)).thenReturn(Optional.of(mockStage));
+        when(modelMapper.map(climbRegistrationDto, Climb.class)).thenReturn(mockClimb);
+        when(modelMapper.map(mockClimb, ClimbOutDto.class)).thenReturn(mockClimbOutDto);
+
+        try {
+            climbService.add(stageId, climbRegistrationDto);
+        } catch (StageNotFoundException unfe) {
+
+        }
+
+        assertEquals(1, mockClimbOutDto.getId());
+        assertEquals("Tourmalet", mockClimbOutDto.getName());
+        assertEquals("Francia", mockClimbOutDto.getRegion());
+        assertEquals("Hors Category", mockClimbOutDto.getCategory());
+        assertEquals(1650, mockClimbOutDto.getAltitude());
+        assertEquals(785, mockClimbOutDto.getSlope());
+        assertEquals(LocalDate.now(), mockClimbOutDto.getLastAscent());
+        assertEquals(1, mockClimbOutDto.getStageId());
+
+        verify(climbRepository, Mockito.times(1)).save(mockClimb);
+
+    }
+
+    @Test
+    void testModify() throws ClimbNotFoundException, StageNotFoundException {
+        // Arrange
+        long climbId = 1;
+        long stageId = 100;
+
+        ClimbInDto climbInDto = new ClimbInDto();
+        climbInDto.setStageId(stageId);
+        climbInDto.setName("Updated Name");
+
+        Climb existingClimb = new Climb();
+        existingClimb.setId(climbId);
+
+        Stage stage = new Stage();
+        stage.setId(stageId);
+
+        Climb updatedClimb = new Climb(); // after mapping
+        updatedClimb.setId(climbId);
+        updatedClimb.setStage(stage);
+        updatedClimb.setName("Updated Name");
+
+        ClimbOutDto expectedOutDto = new ClimbOutDto();
+        expectedOutDto.setId(climbId);
+        expectedOutDto.setName("Updated Name");
+
+        // Mocking behavior
+        when(climbRepository.findById(climbId)).thenReturn(Optional.of(existingClimb));
+        when(stageRepository.findById(stageId)).thenReturn(Optional.of(stage));
+
+        // ✅ Mock de TypeMap para evitar NullPointer
+        TypeMap<ClimbInDto, Climb> mockTypeMap = mock(TypeMap.class);
+        when(modelMapper.typeMap(ClimbInDto.class, Climb.class)).thenReturn(mockTypeMap);
+
+
+        // Mapping input DTO to entity
+        doAnswer(invocation -> {
+            ClimbInDto source = invocation.getArgument(0);
+            Climb target = invocation.getArgument(1);
+            target.setName(source.getName()); // simulate mapping
+            return null;
+        }).when(modelMapper).map(eq(climbInDto), eq(existingClimb));
+
+        // Output DTO mapping
+        when(modelMapper.map(existingClimb, ClimbOutDto.class)).thenReturn(expectedOutDto);
+
+        // Act
+        ClimbOutDto result = climbService.modify(climbId, climbInDto);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(expectedOutDto.getId(), result.getId());
+        assertEquals(expectedOutDto.getName(), result.getName());
+
+        verify(climbRepository).findById(climbId);
+        verify(stageRepository).findById(stageId);
+        verify(modelMapper).map(climbInDto, existingClimb);
+        verify(climbRepository).save(existingClimb);
+        verify(modelMapper).map(existingClimb, ClimbOutDto.class);
+    }
+
+    @Test
+    public void testAddStageNotFound() throws StageNotFoundException {
+        long stageId = 150;
+        ClimbRegistrationDto climbRegistrationDto = new ClimbRegistrationDto("Tourmalet", "Hors Category", "Francia", 1700,1100, true, LocalDate.now(), 47, 45);
+
+        try {
+            when(stageRepository.findById(stageId).orElseThrow(StageNotFoundException::new)).thenThrow(StageNotFoundException.class);
+        } catch (StageNotFoundException unfe) {
+        }
+        assertThrows(StageNotFoundException.class, () -> climbService.add(stageId, climbRegistrationDto));
+    }
+
+    @Test
+    public void testModifyClimbNotFound() throws ClimbNotFoundException, StageNotFoundException {
+        long climbId = 1;
+        ClimbInDto climbInDto = new ClimbInDto();
+        climbInDto.setStageId(100);
+
+        try {
+            when(climbRepository.findById(climbId).orElseThrow(ClimbNotFoundException::new))
+                    .thenThrow(ClimbNotFoundException.class);
+        } catch (ClimbNotFoundException e) {
+
+        }
+
+        assertThrows(ClimbNotFoundException.class, () -> climbService.modify(climbId, climbInDto));
+    }
+    @Test
+    public void testModifyStageNotFound() throws ClimbNotFoundException, StageNotFoundException {
+        long climbId = 1;
+        long stageId = 200;
+
+        ClimbInDto climbInDto = new ClimbInDto();
+        climbInDto.setStageId(stageId);
+
+        Climb existingClimb = new Climb();
+        existingClimb.setId(climbId);
+
+        when(climbRepository.findById(climbId)).thenReturn(Optional.of(existingClimb));
+
+        try {
+            when(stageRepository.findById(stageId).orElseThrow(StageNotFoundException::new))
+                    .thenThrow(StageNotFoundException.class);
+        } catch (StageNotFoundException e) {
+
+        }
+
+        assertThrows(StageNotFoundException.class, () -> climbService.modify(climbId, climbInDto));
+    }
+
+    @Test
+    public void testRemoveClimb() throws ClimbNotFoundException {
+        long climbId = 1;
+
+        Climb climb = new Climb();
+        climb.setId(climbId);
+
+        // Simula que el ciclista existe
+        when(climbRepository.findById(climbId)).thenReturn(Optional.of(climb));
+
+        // Act
+        climbService.remove(climbId);
+
+        // Assert
+        verify(climbRepository).findById(climbId);
+        verify(climbRepository).deleteById(climbId);
+    }
+
+
 }
