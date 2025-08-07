@@ -55,7 +55,7 @@ public class CyclistServiceTests {
         List<CyclistOutDto> mockCyclistDtoList = List.of(
                 new CyclistOutDto(1, "Pogaçar", "escalador", "Eslovenia", 104, LocalDate.now(), 98),
                 new CyclistOutDto(2, "Vingegaard", "escalador", "Dinamarca", 87, LocalDate.now(), 65),
-                new CyclistOutDto(2, "Romeo", "escalador", "España", 104, LocalDate.now(), 1)
+                new CyclistOutDto(3, "Romeo", "escalador", "España", 104, LocalDate.now(), 1)
         );
 
         when(cyclistRepository.findAll()).thenReturn(mockCyclistList);
