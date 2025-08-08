@@ -1,6 +1,7 @@
 package com.svalero.tourfrance.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,7 +37,7 @@ public class Stage {
 //    @Column
 //    private double latitude;
     @OneToMany(mappedBy = "stage")
-    @JsonBackReference(value = "stages_climbs")
+    @JsonManagedReference(value = "stages_climbs")
     private List<Climb> climbs;
 
 

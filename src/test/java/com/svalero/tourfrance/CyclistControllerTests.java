@@ -96,11 +96,161 @@ public class CyclistControllerTests {
     }
 
     //TODO testGetAllBySpecialtyReturnOK
+    @Test
+    public void testGetAllBySpecialtyReturnOk() throws Exception {
+        List<CyclistOutDto> mockCyclistDtoList = List.of(
+                new CyclistOutDto(1, "Pogaçar", "escalador", "Eslovenia", 104, LocalDate.now(), 98),
+                new CyclistOutDto(3, "Pogaçar", "sprinter", "España", 104, LocalDate.now(), 1)
+        );
+
+        when(cyclistService.getAll("", "escalador", "")).thenReturn(mockCyclistDtoList);
+
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders.get("/cyclists")
+                        .queryParam("specialty", "escalador")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = response.getResponse().getContentAsString();
+        List<CyclistOutDto> cyclistListResponse = objectMapper.readValue(jsonResponse, new TypeReference<>(){});
+
+        assertNotNull(cyclistListResponse);
+        assertEquals(2, cyclistListResponse.size());
+        assertEquals("Pogaçar", cyclistListResponse.getFirst().getName());
+        assertEquals("escalador", cyclistListResponse.getFirst().getSpecialty());
+        assertEquals("Eslovenia", cyclistListResponse.getFirst().getBirthplace());
+    }
+
     //TODO testGetAllByBirthplaceReturnOk
+    @Test
+    public void testGetAllByBirthplaceReturnOk() throws Exception {
+        List<CyclistOutDto> mockCyclistDtoList = List.of(
+                new CyclistOutDto(1, "Pogaçar", "escalador", "Eslovenia", 104, LocalDate.now(), 98),
+                new CyclistOutDto(3, "Pogaçar", "sprinter", "España", 104, LocalDate.now(), 1)
+        );
+
+        when(cyclistService.getAll("", "", "Eslovenia")).thenReturn(mockCyclistDtoList);
+
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders.get("/cyclists")
+                        .queryParam("birthplace", "Eslovenia")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = response.getResponse().getContentAsString();
+        List<CyclistOutDto> cyclistListResponse = objectMapper.readValue(jsonResponse, new TypeReference<>(){});
+
+        assertNotNull(cyclistListResponse);
+        assertEquals(2, cyclistListResponse.size());
+        assertEquals("Pogaçar", cyclistListResponse.getFirst().getName());
+        assertEquals("escalador", cyclistListResponse.getFirst().getSpecialty());
+        assertEquals("Eslovenia", cyclistListResponse.getFirst().getBirthplace());
+    }
     //TODO testGetAllByNameAndSpecialtyReturnOk
+    @Test
+    public void testGetAllByNameAndSpecialtyReturnOk() throws Exception {
+        List<CyclistOutDto> mockCyclistDtoList = List.of(
+                new CyclistOutDto(1, "Pogaçar", "escalador", "Eslovenia", 104, LocalDate.now(), 98),
+                new CyclistOutDto(3, "Pogaçar", "escalador", "España", 104, LocalDate.now(), 1)
+        );
+
+        when(cyclistService.getAll("Pogaçar", "escalador", "")).thenReturn(mockCyclistDtoList);
+
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders.get("/cyclists")
+                        .queryParam("name", "Pogaçar")
+                        .queryParam("specialty", "escalador")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = response.getResponse().getContentAsString();
+        List<CyclistOutDto> cyclistListResponse = objectMapper.readValue(jsonResponse, new TypeReference<>(){});
+
+        assertNotNull(cyclistListResponse);
+        assertEquals(2, cyclistListResponse.size());
+        assertEquals("Pogaçar", cyclistListResponse.getFirst().getName());
+        assertEquals("escalador", cyclistListResponse.getFirst().getSpecialty());
+        assertEquals("Eslovenia", cyclistListResponse.getFirst().getBirthplace());
+    }
     //TODO testGetAllByNameAndBirthplaceReturnOk
+    @Test
+    public void testGetAllByNameAndBirthplaceReturnOk() throws Exception {
+        List<CyclistOutDto> mockCyclistDtoList = List.of(
+                new CyclistOutDto(1, "Pogaçar", "escalador", "Eslovenia", 104, LocalDate.now(), 98),
+                new CyclistOutDto(3, "Pogaçar", "escalador", "España", 104, LocalDate.now(), 1)
+        );
+
+        when(cyclistService.getAll("Pogaçar", "", "Francia")).thenReturn(mockCyclistDtoList);
+
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders.get("/cyclists")
+                        .queryParam("name", "Pogaçar")
+                        .queryParam("birthplace", "Francia")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = response.getResponse().getContentAsString();
+        List<CyclistOutDto> cyclistListResponse = objectMapper.readValue(jsonResponse, new TypeReference<>(){});
+
+        assertNotNull(cyclistListResponse);
+        assertEquals(2, cyclistListResponse.size());
+        assertEquals("Pogaçar", cyclistListResponse.getFirst().getName());
+        assertEquals("escalador", cyclistListResponse.getFirst().getSpecialty());
+        assertEquals("Eslovenia", cyclistListResponse.getFirst().getBirthplace());
+    }
     //TODO testGetAllBySpecialtyAndBirthplaceReturnOk
+    @Test
+    public void testGetAllBySpecialtyAndBirthplaceReturnOk() throws Exception {
+        List<CyclistOutDto> mockCyclistDtoList = List.of(
+                new CyclistOutDto(1, "Pogaçar", "escalador", "Eslovenia", 104, LocalDate.now(), 98),
+                new CyclistOutDto(3, "Pogaçar", "escalador", "España", 104, LocalDate.now(), 1)
+        );
+
+        when(cyclistService.getAll("", "escalador", "Eslovenia")).thenReturn(mockCyclistDtoList);
+
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders.get("/cyclists")
+                        .queryParam("specialty", "escalador")
+                        .queryParam("birthplace", "Eslovenia")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = response.getResponse().getContentAsString();
+        List<CyclistOutDto> cyclistListResponse = objectMapper.readValue(jsonResponse, new TypeReference<>(){});
+
+        assertNotNull(cyclistListResponse);
+        assertEquals(2, cyclistListResponse.size());
+        assertEquals("Pogaçar", cyclistListResponse.getFirst().getName());
+        assertEquals("escalador", cyclistListResponse.getFirst().getSpecialty());
+        assertEquals("Eslovenia", cyclistListResponse.getFirst().getBirthplace());
+    }
     //TODO testGetAllByNameAndSpecialtyAndBirthplace
+    @Test
+    public void testGetAllByNameAndSpecialtyAndBirthplaceReturnOk() throws Exception {
+        List<CyclistOutDto> mockCyclistDtoList = List.of(
+                new CyclistOutDto(1, "Pogaçar", "escalador", "Eslovenia", 104, LocalDate.now(), 98),
+                new CyclistOutDto(3, "Pogaçar", "escalador", "España", 104, LocalDate.now(), 1)
+        );
+
+        when(cyclistService.getAll("Pogaçar", "escalador", "Eslovenia")).thenReturn(mockCyclistDtoList);
+
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders.get("/cyclists")
+                        .queryParam("name", "Pogaçar")
+                        .queryParam("specialty", "escalador")
+                        .queryParam("birthplace", "Eslovenia")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = response.getResponse().getContentAsString();
+        List<CyclistOutDto> cyclistListResponse = objectMapper.readValue(jsonResponse, new TypeReference<>(){});
+
+        assertNotNull(cyclistListResponse);
+        assertEquals(2, cyclistListResponse.size());
+        assertEquals("Pogaçar", cyclistListResponse.getFirst().getName());
+        assertEquals("escalador", cyclistListResponse.getFirst().getSpecialty());
+        assertEquals("Eslovenia", cyclistListResponse.getFirst().getBirthplace());
+    }
     //test para get
    @Test
 
