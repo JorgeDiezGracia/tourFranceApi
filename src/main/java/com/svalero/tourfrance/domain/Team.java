@@ -23,9 +23,9 @@ public class Team {
     @Column
     private String name;
     @Column
-    private String email;
-    @Column
     private String country;
+    @Column
+    private String email;
     @Column
     private float budget;
     @Column(name="fundation_date")
