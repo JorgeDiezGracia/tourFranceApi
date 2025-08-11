@@ -62,10 +62,6 @@ public class TeamService {
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(TeamNotFoundException::new);
 
-        //Team team = teamRepository.findById(cyclistInDto.getTeamId())
-                //.orElseThrow(TeamNotFoundException::new);
-
-        //cyclist.setTeam(team);
 
         modelMapper.map(teamInDto, team);
         modelMapper.typeMap(TeamInDto.class, Team.class)
