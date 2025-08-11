@@ -10,6 +10,7 @@ import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.CyclistRepository;
 import com.svalero.tourfrance.repository.TeamRepository;
 import com.svalero.tourfrance.service.CyclistService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,6 +47,37 @@ public class CyclistServiceTests {
     private TeamRepository teamRepository;
 
     @Test
+    public void testGetCyclistByIdFound() throws CyclistNotFoundException {
+        // Arrange
+        long cyclistId = 1L;
+        Cyclist mockCyclist = new Cyclist();
+        mockCyclist.setId(cyclistId);
+        mockCyclist.setName("Miguel Indurain");
+
+        when(cyclistRepository.findById(cyclistId)).thenReturn(Optional.of(mockCyclist));
+
+        // Act
+        Cyclist result = cyclistService.get(cyclistId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(cyclistId, result.getId());
+        assertEquals("Miguel Indurain", result.getName());
+    }
+
+    @Test
+    public void testGetCyclistById_notFound() {
+        // Arrange
+        long cyclistId = 99L;
+        when(cyclistRepository.findById(cyclistId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(CyclistNotFoundException.class, () -> {
+            cyclistService.get(cyclistId);
+        });
+    }
+
+    @Test
     public void testGetAll() {
         List<Cyclist> mockCyclistList = List.of(
                 new Cyclist(1, "Pogaçar", "escalador", "Eslovenia", 104, 58, LocalDate.now(), true, null),
@@ -78,6 +110,7 @@ public class CyclistServiceTests {
         verify(cyclistRepository, times(0)).findByNameAndSpecialty("", "");
         verify(cyclistRepository, times(1)).findAll();
     }
+
 
     @Test
     public void testGetAllByName() {
@@ -463,6 +496,23 @@ public class CyclistServiceTests {
         // Assert
         verify(cyclistRepository).findById(cyclistId);
         verify(cyclistRepository).deleteById(cyclistId);
+    }
+
+    //TODO testremoveCyclistnotfound
+    @Test
+    public void testRemoveCyclistNotFound() throws CyclistNotFoundException {
+        long cyclistId = 1;
+
+        Cyclist cyclist = new Cyclist();
+        cyclist.setId(cyclistId);
+
+        try {
+            when(cyclistRepository.findById(cyclistId).orElseThrow(CyclistNotFoundException::new))
+                    .thenThrow(CyclistNotFoundException.class);
+        } catch (CyclistNotFoundException e) {
+
+        }
+        assertThrows(CyclistNotFoundException.class, () -> cyclistService.remove(cyclistId));
     }
 
 }
