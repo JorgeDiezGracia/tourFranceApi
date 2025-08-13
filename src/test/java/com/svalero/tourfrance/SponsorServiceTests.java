@@ -1,5 +1,6 @@
 package com.svalero.tourfrance;
 
+import com.svalero.tourfrance.domain.Cyclist;
 import com.svalero.tourfrance.domain.Sponsor;
 import com.svalero.tourfrance.domain.Team;
 
@@ -7,6 +8,7 @@ import com.svalero.tourfrance.domain.dto.SponsorInDto;
 import com.svalero.tourfrance.domain.dto.SponsorOutDto;
 
 import com.svalero.tourfrance.domain.dto.SponsorRegistrationDto;
+import com.svalero.tourfrance.exception.CyclistNotFoundException;
 import com.svalero.tourfrance.exception.SponsorNotFoundException;
 import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.SponsorRepository;
@@ -49,6 +51,34 @@ public class SponsorServiceTests {
 
     @Mock
     private TeamRepository teamRepository;
+
+    @Test
+    public void testGetSponsorByIdFound() throws SponsorNotFoundException {
+
+        long sponsorId = 1L;
+        Sponsor mockSponsor = new Sponsor();
+        mockSponsor.setId(sponsorId);
+        mockSponsor.setName("Decathlon");
+
+        when(sponsorRepository.findById(sponsorId)).thenReturn(Optional.of(mockSponsor));
+
+        Sponsor result = sponsorService.get(sponsorId);
+
+        assertNotNull(result);
+        assertEquals(sponsorId, result.getId());
+        assertEquals("Decathlon", result.getName());
+    }
+
+    @Test
+    public void testGetSponsorByIdNotFound() {
+        long sponsorId = 99L;
+        when(sponsorRepository.findById(sponsorId)).thenReturn(Optional.empty());
+
+        assertThrows(SponsorNotFoundException.class, () -> {
+            sponsorService.get(sponsorId);
+        });
+    }
+
 
     @Test
     public void testGetAll() {
@@ -470,4 +500,21 @@ public class SponsorServiceTests {
         verify(sponsorRepository).findById(sponsorId);
         verify(sponsorRepository).deleteById(sponsorId);
     }
+
+    @Test
+    public void testRemoveSponsorNotFound() throws CyclistNotFoundException {
+        long sponsorId = 1;
+
+        Sponsor sponsor = new Sponsor();
+        sponsor.setId(sponsorId);
+
+        try {
+            when(sponsorRepository.findById(sponsorId).orElseThrow(SponsorNotFoundException::new))
+                    .thenThrow(SponsorNotFoundException.class);
+        } catch (SponsorNotFoundException e) {
+
+        }
+        assertThrows(SponsorNotFoundException.class, () -> sponsorService.remove(sponsorId));
+    }
+
 }
