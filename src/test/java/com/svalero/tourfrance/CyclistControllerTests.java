@@ -4,11 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.svalero.tourfrance.controller.CyclistController;
 import com.svalero.tourfrance.domain.Cyclist;
+import com.svalero.tourfrance.domain.dto.CyclistInDto;
 import com.svalero.tourfrance.domain.dto.CyclistOutDto;
 import com.svalero.tourfrance.domain.dto.CyclistRegistrationDto;
 import com.svalero.tourfrance.domain.dto.ErrorResponse;
 import com.svalero.tourfrance.exception.CyclistNotFoundException;
 import com.svalero.tourfrance.exception.TeamNotFoundException;
+import com.svalero.tourfrance.repository.CyclistRepository;
 import com.svalero.tourfrance.repository.TeamRepository;
 import com.svalero.tourfrance.service.CyclistService;
 import org.junit.jupiter.api.Disabled;
@@ -28,7 +30,10 @@ import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CyclistController.class)
@@ -45,6 +50,10 @@ public class CyclistControllerTests {
 
     @MockitoBean
     private TeamRepository teamRepository;
+
+    @MockitoBean
+    private CyclistRepository cyclistRepository;
+
 
     //test para getall
     @Test
@@ -305,12 +314,12 @@ public class CyclistControllerTests {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.teamId").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.specialty").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.birthplace").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.titles").exists())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.teamId").exists())
+                .andExpect(jsonPath("$.name").exists())
+                .andExpect(jsonPath("$.specialty").exists())
+                .andExpect(jsonPath("$.birthplace").exists())
+                .andExpect(jsonPath("$.titles").exists())
                 .andReturn();
 
         String jsonResponse = response.getResponse().getContentAsString();
@@ -382,5 +391,128 @@ public class CyclistControllerTests {
 
     }
 
+
     //TODO REMOVE(204 Y 404) Y MODIFY(200, 400, 404) (EN CLASES ONETOOMANY SÓLO 200 Y 400)
+
+    @Test
+    public void testRemoveCyclistNoContent() throws Exception {
+        long cyclistId = 1L;
+
+        // Simulamos que el servicio no lanza excepción al eliminar
+        doNothing().when(cyclistService).remove(cyclistId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/cyclists/{cyclistId}", cyclistId))
+                .andExpect(status().isNoContent());
+
+        verify(cyclistService, times(1)).remove(cyclistId);
+    }
+
+    @Test
+    public void testRemoveCyclistNotFound() throws Exception {
+        long cyclistId = 999L;
+
+        // Simulamos que el servicio lanza CyclistNotFoundException
+        doThrow(new CyclistNotFoundException()).when(cyclistService).remove(cyclistId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/cyclists/{cyclistId}", cyclistId))
+                .andExpect(status().isNotFound());
+
+        verify(cyclistService, times(1)).remove(cyclistId);
+    }
+
+    @Test
+    public void testModifyCyclistOk() throws Exception {
+        long cyclistId = 1L;
+        long teamId = 10L;
+
+        CyclistInDto cyclistInDto = new CyclistInDto(
+                "Juan Pérez",           // name
+                "Sprinter",             // specialty
+                "Madrid",               // birthplace
+                2,                      // titles
+                LocalDate.of(1990, 5, 1), // birthdate
+                teamId                  // teamId
+        );
+
+        CyclistOutDto modifiedCyclist = new CyclistOutDto(
+                cyclistId, "Juan Pérez", "Sprinter", "Madrid", 2,
+                LocalDate.of(1990, 5, 1), teamId
+        );
+
+        when(cyclistService.modify(eq(cyclistId), any(CyclistInDto.class)))
+                .thenReturn(modifiedCyclist);
+
+        String requestBody = objectMapper.writeValueAsString(cyclistInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/cyclists/{cyclistId}", cyclistId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(cyclistId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Juan Pérez"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.specialty").value("Sprinter"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.birthplace").value("Madrid"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.titles").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.teamId").value(teamId));
+
+        verify(cyclistService, times(1)).modify(eq(cyclistId), any(CyclistInDto.class));
+    }
+
+    @Test
+    public void testModifyCyclistNotFound() throws Exception {
+        long cyclistId = 999L;
+        long teamId = 10L;
+
+        CyclistInDto cyclistInDto = new CyclistInDto(
+                "Juan Pérez",
+                "Sprinter",
+                "Madrid",
+                2,
+                LocalDate.of(1990, 5, 1),
+                teamId
+        );
+
+        // El servicio lanza la excepción
+        when(cyclistService.modify(eq(cyclistId), any(CyclistInDto.class)))
+                .thenThrow(new CyclistNotFoundException());
+
+        String requestBody = objectMapper.writeValueAsString(cyclistInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/cyclists/{cyclistId}", cyclistId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+
+        verify(cyclistService, times(1)).modify(eq(cyclistId), any(CyclistInDto.class));
+    }
+    @Test
+    public void testModifyTeamNotFound() throws Exception {
+        long cyclistId = 1L;
+        long nonexistentTeamId = 9999L;
+
+        CyclistInDto cyclistInDto = new CyclistInDto(
+                "Juan Pérez",
+                "Sprinter",
+                "Madrid",
+                2,
+                LocalDate.of(1990, 5, 1),
+                nonexistentTeamId
+        );
+
+        // El servicio lanza la excepción
+        when(cyclistService.modify(eq(cyclistId), any(CyclistInDto.class)))
+                .thenThrow(new TeamNotFoundException());
+
+        String requestBody = objectMapper.writeValueAsString(cyclistInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/cyclists/{cyclistId}", cyclistId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+
+        verify(cyclistService, times(1)).modify(eq(cyclistId), any(CyclistInDto.class));
+    }
  }

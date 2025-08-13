@@ -370,7 +370,7 @@ public class CyclistServiceTests {
     }
 
     @Test
-    void testModify() throws CyclistNotFoundException, TeamNotFoundException {
+    public void testModify() throws CyclistNotFoundException, TeamNotFoundException {
         // Arrange
         long cyclistId = 1;
         long teamId = 100;
@@ -498,7 +498,6 @@ public class CyclistServiceTests {
         verify(cyclistRepository).deleteById(cyclistId);
     }
 
-    //TODO testremoveCyclistnotfound
     @Test
     public void testRemoveCyclistNotFound() throws CyclistNotFoundException {
         long cyclistId = 1;

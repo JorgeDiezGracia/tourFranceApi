@@ -109,7 +109,7 @@ public class TeamServiceTests {
     }
 
     @Test
-    void testModifyTeam() throws TeamNotFoundException {
+    public void testModifyTeam() throws TeamNotFoundException {
         // Arrange
         long teamId = 1;
 
