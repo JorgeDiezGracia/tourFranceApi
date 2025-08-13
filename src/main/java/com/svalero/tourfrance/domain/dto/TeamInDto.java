@@ -15,9 +15,9 @@ public class TeamInDto {
     //private long id;
     @NotNull(message = "El campo name es obligatorio")
     private String name;
-    private String email;
     @NotNull(message = "El campo country es obligatorio")
     private String country;
+    private String email;
     @Min(value = 0)
     private float budget;
     private LocalDate fundationDate;

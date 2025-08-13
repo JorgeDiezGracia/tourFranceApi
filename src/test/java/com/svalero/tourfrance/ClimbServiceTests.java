@@ -1,17 +1,16 @@
 package com.svalero.tourfrance;
 
 import com.svalero.tourfrance.domain.Climb;
-import com.svalero.tourfrance.domain.Cyclist;
 import com.svalero.tourfrance.domain.Stage;
 import com.svalero.tourfrance.domain.Team;
 import com.svalero.tourfrance.domain.dto.*;
 import com.svalero.tourfrance.exception.ClimbNotFoundException;
-import com.svalero.tourfrance.exception.CyclistNotFoundException;
 import com.svalero.tourfrance.exception.StageNotFoundException;
 import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.ClimbRepository;
 import com.svalero.tourfrance.repository.StageRepository;
 import com.svalero.tourfrance.service.ClimbService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +28,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static javax.management.Query.times;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
@@ -48,6 +46,22 @@ public class ClimbServiceTests {
 
     @Mock
     private StageRepository stageRepository;
+
+    @Test
+    public void testGetClimbByIdFound() throws ClimbNotFoundException {
+        long climbId = 1L;
+        Climb mockClimb = new Climb();
+        mockClimb.setId(climbId);
+        mockClimb.setName("Tourmalet");
+
+        when(climbRepository.findById(climbId)).thenReturn(Optional.of(mockClimb));
+
+        Climb result = climbService.get(climbId);
+
+        assertNotNull(result);
+        assertEquals(climbId, result.getId());
+        assertEquals("Tourmalet", result.getName());
+    }
 
     @Test
     public void testGetAll() {
