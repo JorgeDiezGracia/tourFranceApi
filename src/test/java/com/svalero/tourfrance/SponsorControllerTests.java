@@ -3,14 +3,11 @@ package com.svalero.tourfrance;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.svalero.tourfrance.controller.SponsorController;
-import com.svalero.tourfrance.domain.dto.ErrorResponse;
-import com.svalero.tourfrance.domain.dto.SponsorOutDto;
-import com.svalero.tourfrance.domain.dto.SponsorRegistrationDto;
+import com.svalero.tourfrance.domain.dto.*;
 import com.svalero.tourfrance.exception.SponsorNotFoundException;
 import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.SponsorRepository;
 import com.svalero.tourfrance.service.SponsorService;
-import com.svalero.tourfrance.domain.dto.SponsorInDto;
 import com.svalero.tourfrance.domain.Sponsor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,7 @@ import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(SponsorController.class)
@@ -260,10 +257,6 @@ public class SponsorControllerTests {
     }
 
 
-
-
-
-
     //test para get
    @Test
 
@@ -398,5 +391,100 @@ public class SponsorControllerTests {
 
     }
 
+    @Test
+    public void testRemoveSponsorNoContent() throws Exception {
+        long sponsorId = 1L;
 
-}
+        doNothing().when(sponsorService).remove(sponsorId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/sponsors/{sponsorId}", sponsorId))
+                .andExpect(status().isNoContent());
+
+        verify(sponsorService,times(1)).remove(sponsorId);
+    }
+
+    @Test
+    public void testRemoveSponsorNotFound() throws Exception {
+        long sponsorId = 999L;
+
+        doThrow(new SponsorNotFoundException()).when(sponsorService).remove(sponsorId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/sponsors/{sponsorId}", sponsorId))
+                .andExpect(status().isNotFound());
+
+        verify(sponsorService, times(1)).remove(sponsorId);
+    }
+
+    @Test
+    public void testModifySponsorOk() throws Exception {
+        long sponsorId = 1L;
+        long teamId = 10L;
+
+        SponsorInDto sponsorInDto = new SponsorInDto("Decathlon", "Francia", "decathlon@decathlon.com", 5000, 100, LocalDate.now(),teamId);
+
+        SponsorOutDto modifiedSponsor = new SponsorOutDto(sponsorId, "Decathlon", "Francia", "decathlon@decathlon.com", 5000, LocalDate.now(),teamId);
+
+        when(sponsorService.modify(eq(sponsorId), any(SponsorInDto.class)))
+                .thenReturn(modifiedSponsor);
+
+        String requestBody = objectMapper.writeValueAsString(sponsorInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/sponsors/{sponsorId}", sponsorId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(sponsorId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Decathlon"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.country").value("Francia"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("decathlon@decathlon.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employees").value(5000))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.teamId").value(teamId));
+
+        verify(sponsorService, times(1)).modify(eq(sponsorId), any(SponsorInDto.class));
+    }
+
+    @Test
+    public void testModifySponsorNotFound() throws Exception {
+        long sponsorId = 999L;
+        long teamId = 10L;
+
+        SponsorInDto sponsorInDto = new SponsorInDto("Decathlon", "Francia", "decathlon@decathlon.com", 5000, 100, LocalDate.now(),teamId);
+
+        when(sponsorService.modify(eq(sponsorId), any(SponsorInDto.class)))
+                .thenThrow(new SponsorNotFoundException());
+
+        String requestBody = objectMapper.writeValueAsString(sponsorInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/sponsors/{sponsorId}", sponsorId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+
+        verify(sponsorService, times(1)).modify(eq(sponsorId), any(SponsorInDto.class));
+    }
+
+    @Test
+    public void testModifyTeamNotFound() throws Exception {
+        long sponsorId = 1L;
+        long teamId = 9999L;
+
+        SponsorInDto sponsorInDto = new SponsorInDto("Decathlon", "Francia", "decathlon@decathlon.com", 5000, 100, LocalDate.now(),teamId);
+
+        when(sponsorService.modify(eq(sponsorId), any(SponsorInDto.class)))
+                .thenThrow(new TeamNotFoundException());
+
+        String requestBody = objectMapper.writeValueAsString(sponsorInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/sponsors/{sponsorId}", sponsorId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+
+        verify(sponsorService, times(1)).modify(eq(sponsorId), any(SponsorInDto.class));
+    }
+    }
+
+
