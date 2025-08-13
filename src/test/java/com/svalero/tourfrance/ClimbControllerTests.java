@@ -28,7 +28,7 @@ import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ClimbController.class)
@@ -393,4 +393,101 @@ public class ClimbControllerTests {
         assertEquals("El campo category es obligatorio", errorResponse.getErrorMessages().get("category"));
         assertEquals("must be greater than or equal to 0", errorResponse.getErrorMessages().get("altitude"));
     }
+
+    @Test
+    public void testRemoveClimbNoContent() throws Exception {
+        long climbId = 1L;
+
+        doNothing().when(climbService).remove(climbId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/climbs/{climbId}", climbId))
+                .andExpect(status().isNoContent());
+
+        verify(climbService, times(1)).remove(climbId);
+    }
+
+    @Test
+    public void testRemoveClimbNotFound() throws Exception {
+        long climbId = 999L;
+
+        doThrow(new ClimbNotFoundException()).when(climbService).remove(climbId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/climbs/{climbId}", climbId))
+                .andExpect(status().isNotFound());
+
+        verify(climbService, times(1)).remove(climbId);
+    }
+
+    @Test
+    public void testModifyClimbOk() throws Exception {
+        long climbId = 1L;
+        long stageId = 10L;
+
+        ClimbInDto climbInDto = new ClimbInDto("Tourmalet", "Hors Category", "Francia", 1800, 900, LocalDate.now(), stageId);
+
+
+        ClimbOutDto modifiedClimb = new ClimbOutDto(climbId, "Tourmalet", "Hors Category", "Francia", 1800, 900, true, LocalDate.now(), stageId);
+
+        when(climbService.modify(eq(climbId), any(ClimbInDto.class)))
+                .thenReturn(modifiedClimb);
+
+        String requestBody = objectMapper.writeValueAsString(climbInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/climbs/{climbId}", climbId)
+                .content(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(climbId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Tourmalet"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.category").value("Hors Category"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.region").value("Francia"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.altitude").value(1800))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.stageId").value(stageId));
+
+        verify(climbService, times(1)).modify(eq(climbId), any(ClimbInDto.class));
+
+    }
+
+    @Test
+    public void testModifyClimbNotFound() throws Exception {
+        long climbId = 999L;
+        long stageId = 10L;
+
+        ClimbInDto climbInDto = new ClimbInDto("Tourmalet", "Hors Category", "Francia", 1800, 900, LocalDate.now(), stageId);
+
+        when(climbService.modify(eq(climbId), any(ClimbInDto.class)))
+                .thenThrow(new ClimbNotFoundException());
+
+        String requestBody = objectMapper.writeValueAsString(climbInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/climbs/{climbId}", climbId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+
+        verify(climbService, times(1)).modify(eq(climbId), any(ClimbInDto.class));
+    }
+
+    @Test
+    public void testModifyStageNotFound() throws Exception {
+        long climbId = 1L;
+        long stageId = 9999L;
+
+        ClimbInDto climbInDto = new ClimbInDto("Tourmalet", "Hors Category", "Francia", 1800, 900, LocalDate.now(), stageId);
+
+        when(climbService.modify(eq(climbId), any(ClimbInDto.class)))
+                .thenThrow(new StageNotFoundException());
+
+        String requestBody = objectMapper.writeValueAsString(climbInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/climbs/{climbId}", climbId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+
+        verify(climbService, times(1)).modify(eq(climbId), any(ClimbInDto.class));
+    }
+
 }

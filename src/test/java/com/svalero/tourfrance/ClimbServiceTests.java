@@ -64,6 +64,16 @@ public class ClimbServiceTests {
     }
 
     @Test
+    public void testGetClimbByIdNotFound() {
+        long climbId = 99L;
+        when(climbRepository.findById(climbId)).thenReturn(Optional.empty());
+
+        assertThrows(ClimbNotFoundException.class, () -> {
+            climbService.get(climbId);
+        });
+    }
+
+    @Test
     public void testGetAll() {
         List<Climb> mockClimbList = List.of(
                 new Climb (1,"Tourmalet", "Hors Category", "Francia", 1650, 785, true, LocalDate.now(), 85, 45, null),
@@ -475,5 +485,19 @@ public class ClimbServiceTests {
         verify(climbRepository).deleteById(climbId);
     }
 
+    @Test
+    public void testRemoveClimbNotFound() throws ClimbNotFoundException {
+        long climbId = 1;
 
+        Climb climb = new Climb();
+        climb.setId(climbId);
+
+        try {
+            when(climbRepository.findById(climbId).orElseThrow(ClimbNotFoundException::new))
+                    .thenThrow(ClimbNotFoundException.class);
+        } catch (ClimbNotFoundException e) {
+
+        }
+        assertThrows(ClimbNotFoundException.class, () -> climbService.remove(climbId));
+    }
 }
