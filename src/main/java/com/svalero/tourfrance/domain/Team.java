@@ -30,7 +30,6 @@ public class Team {
     private float budget;
     @Column(name="fundation_date")
     private LocalDate fundationDate;
-
     @OneToMany(mappedBy = "team")
     @JsonManagedReference(value = "teams_cyclists")
     private List<Cyclist> cyclists;
