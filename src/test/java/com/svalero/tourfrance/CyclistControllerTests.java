@@ -15,10 +15,12 @@ import com.svalero.tourfrance.repository.TeamRepository;
 import com.svalero.tourfrance.service.CyclistService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
@@ -32,10 +34,13 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(CyclistController.class)
 public class CyclistControllerTests {
 
@@ -515,4 +520,64 @@ public class CyclistControllerTests {
 
         verify(cyclistService, times(1)).modify(eq(cyclistId), any(CyclistInDto.class));
     }
- }
+
+    @Test
+    void modifyCyclistReturn400() throws Exception {
+        // Caso 1: falta name
+        CyclistInDto missingNameDto = new CyclistInDto();
+        missingNameDto.setSpecialty("Sprinter");
+        missingNameDto.setBirthplace("Madrid");
+        missingNameDto.setTitles(3);
+        missingNameDto.setBirthdate(LocalDate.of(1990, 1, 1));
+        missingNameDto.setTeamId(1L);
+
+        MvcResult result1 = mockMvc.perform(put("/cyclists/{cyclistId}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(missingNameDto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorMessages.name").value("El campo name es obligatorio"))
+                .andReturn();
+
+        System.out.println(result1.getResponse().getContentAsString());
+
+        // Caso 2: falta specialty
+        CyclistInDto missingSpecialtyDto = new CyclistInDto();
+        missingSpecialtyDto.setName("Carlos");
+        missingSpecialtyDto.setBirthplace("Barcelona");
+        missingSpecialtyDto.setTitles(2);
+        missingSpecialtyDto.setBirthdate(LocalDate.of(1992, 5, 10));
+        missingSpecialtyDto.setTeamId(2L);
+
+        MvcResult result2 = mockMvc.perform(put("/cyclists/{cyclistId}", 2L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(missingSpecialtyDto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorMessages.specialty").value("El campo specialty es obligatorio"))
+                .andReturn();
+
+        System.out.println(result2.getResponse().getContentAsString());
+
+        // Caso 3: titles negativo
+        CyclistInDto negativeTitlesDto = new CyclistInDto();
+        negativeTitlesDto.setName("Lucía");
+        negativeTitlesDto.setSpecialty("Escaladora");
+        negativeTitlesDto.setBirthplace("Valencia");
+        negativeTitlesDto.setTitles(-1); // inválido
+        negativeTitlesDto.setBirthdate(LocalDate.of(1988, 3, 15));
+        negativeTitlesDto.setTeamId(3L);
+
+        MvcResult result3 = mockMvc.perform(put("/cyclists/{cyclistId}", 3L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(negativeTitlesDto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorMessages.titles").exists())
+                .andReturn();
+
+        System.out.println(result3.getResponse().getContentAsString());
+        // Verifica que el servicio nunca fue llamado
+        verify(cyclistService, never()).modify(anyLong(), any(CyclistInDto.class));
+    }
+
+
+}
+

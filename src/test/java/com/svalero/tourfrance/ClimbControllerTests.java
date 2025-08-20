@@ -1,36 +1,49 @@
 package com.svalero.tourfrance;
 
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.svalero.tourfrance.controller.ClimbController;
-import com.svalero.tourfrance.domain.Climb;
-import com.svalero.tourfrance.domain.Cyclist;
-import com.svalero.tourfrance.domain.dto.*;
-import com.svalero.tourfrance.domain.dto.ClimbOutDto;
-import com.svalero.tourfrance.exception.ClimbNotFoundException;
-import com.svalero.tourfrance.exception.CyclistNotFoundException;
-import com.svalero.tourfrance.exception.StageNotFoundException;
-import com.svalero.tourfrance.exception.TeamNotFoundException;
-import com.svalero.tourfrance.repository.StageRepository;
-import com.svalero.tourfrance.service.ClimbService;
+
+import com.svalero.tourfrance.domain.dto.ErrorResponse;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+import com.svalero.tourfrance.controller.ClimbController;
+import com.svalero.tourfrance.domain.Climb;
+import com.svalero.tourfrance.domain.dto.*;
+import com.svalero.tourfrance.domain.dto.ClimbOutDto;
+import com.svalero.tourfrance.exception.ClimbNotFoundException;
+import com.svalero.tourfrance.exception.StageNotFoundException;
+import com.svalero.tourfrance.repository.StageRepository;
+import com.svalero.tourfrance.service.ClimbService;
+
+
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(ClimbController.class)
 public class ClimbControllerTests {
 
@@ -316,12 +329,12 @@ public class ClimbControllerTests {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.stageId").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.category").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastAscent").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.altitude").exists())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.stageId").exists())
+                .andExpect(jsonPath("$.name").exists())
+                .andExpect(jsonPath("$.category").exists())
+                .andExpect(jsonPath("$.lastAscent").exists())
+                .andExpect(jsonPath("$.altitude").exists())
                 .andReturn();
 
         String jsonResponse = response.getResponse().getContentAsString();
@@ -434,15 +447,15 @@ public class ClimbControllerTests {
         String requestBody = objectMapper.writeValueAsString(climbInDto);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/climbs/{climbId}", climbId)
-                .content(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(climbId))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Tourmalet"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.category").value("Hors Category"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.region").value("Francia"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.altitude").value(1800))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.stageId").value(stageId));
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.id").value(climbId))
+                .andExpect(jsonPath("$.name").value("Tourmalet"))
+                .andExpect(jsonPath("$.category").value("Hors Category"))
+                .andExpect(jsonPath("$.region").value("Francia"))
+                .andExpect(jsonPath("$.altitude").value(1800))
+                .andExpect(jsonPath("$.stageId").value(stageId));
 
         verify(climbService, times(1)).modify(eq(climbId), any(ClimbInDto.class));
 
@@ -490,4 +503,24 @@ public class ClimbControllerTests {
         verify(climbService, times(1)).modify(eq(climbId), any(ClimbInDto.class));
     }
 
+    @Test
+    public void modifyClimbReturn400() throws Exception {
+        //caso 1
+        ClimbInDto missingDto = new ClimbInDto();
+        missingDto.setRegion("Francia");
+        missingDto.setAltitude(1800);
+        missingDto.setStageId(9999L);
+
+        MvcResult result1 = mockMvc.perform(put("/climbs/{climbId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(missingDto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorMessages.name").value("El campo name es obligatorio"))
+                .andExpect(jsonPath("$.errorMessages.category").value("El campo category es obligatorio"))
+                .andReturn();
+
+        System.out.println(result1.getResponse().getContentAsString());
+        verify(climbService, never()).modify(anyLong(), any(ClimbInDto.class));
+
+    }
 }

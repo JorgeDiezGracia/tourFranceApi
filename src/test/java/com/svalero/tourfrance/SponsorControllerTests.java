@@ -2,30 +2,46 @@ package com.svalero.tourfrance;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.svalero.tourfrance.controller.SponsorController;
-import com.svalero.tourfrance.domain.dto.*;
-import com.svalero.tourfrance.exception.SponsorNotFoundException;
-import com.svalero.tourfrance.exception.TeamNotFoundException;
-import com.svalero.tourfrance.repository.SponsorRepository;
-import com.svalero.tourfrance.service.SponsorService;
-import com.svalero.tourfrance.domain.Sponsor;
+
+import com.svalero.tourfrance.domain.dto.ErrorResponse;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.svalero.tourfrance.domain.dto.*;
+
+import com.svalero.tourfrance.controller.SponsorController;
+import com.svalero.tourfrance.exception.SponsorNotFoundException;
+import com.svalero.tourfrance.exception.TeamNotFoundException;
+import com.svalero.tourfrance.repository.SponsorRepository;
+import com.svalero.tourfrance.service.SponsorService;
+import com.svalero.tourfrance.domain.Sponsor;
+
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 
 @WebMvcTest(SponsorController.class)
 public class SponsorControllerTests {
@@ -484,6 +500,26 @@ public class SponsorControllerTests {
                 .andExpect(status().isNotFound());
 
         verify(sponsorService, times(1)).modify(eq(sponsorId), any(SponsorInDto.class));
+    }
+    @Test
+    public void modifySponsorReturn400() throws Exception{
+        SponsorInDto missingDto = new SponsorInDto();
+        missingDto.setEmail("movistar@movistar.com");
+        missingDto.setFunding(120);
+        missingDto.setEndContract(LocalDate.now());
+        missingDto.setTeamId(1);
+
+        MvcResult result = mockMvc.perform(put("/sponsors/{sponsorId}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(missingDto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorMessages.name").value("El campo name es obligatorio"))
+                .andExpect(jsonPath("$.errorMessages.country").value("El campo country es obligatorio"))
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+        verify(sponsorService, never()).modify(anyLong(), any(SponsorInDto.class));
+
     }
     }
 
