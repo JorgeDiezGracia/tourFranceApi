@@ -6,6 +6,7 @@ import com.svalero.tourfrance.controller.ClimbController;
 import com.svalero.tourfrance.controller.TeamController;
 import com.svalero.tourfrance.domain.dto.*;
 import com.svalero.tourfrance.exception.CyclistNotFoundException;
+import com.svalero.tourfrance.exception.StageNotFoundException;
 import com.svalero.tourfrance.exception.TeamNotFoundException;
 import com.svalero.tourfrance.repository.TeamRepository;
 import com.svalero.tourfrance.service.TeamService;
@@ -25,6 +26,8 @@ import java.util.List;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TeamController.class)
@@ -182,9 +185,93 @@ public class TeamControllerTests {
 
     //TODO testRemoveTeamNotFound
 
+    @Test
+    public void testRemoveTeamNotFound() throws Exception {
+        long teamId = 999L;
+
+        // Simulamos que el servicio lanza TeamNotFoundException
+        doThrow(new TeamNotFoundException()).when(teamService).remove(teamId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/teams/{teamId}", teamId))
+                .andExpect(status().isNotFound());
+
+        verify(teamService, times(1)).remove(teamId);
+    }
 
     //TODO testModifyTeamOk
+
+    @Test
+    public void testModifyTeamOk() throws Exception {
+        long teamId = 1L;
+
+        TeamInDto teamInDto = new TeamInDto("Movistar", "España", "movistar@movistar.com", 150, LocalDate.now());
+
+
+        TeamOutDto modifiedTeam = new TeamOutDto(1, "Movistar", "España", "movistar@movistar.com", 150, LocalDate.now());
+
+        when(teamService.modify(eq(teamId), any(TeamInDto.class)))
+                .thenReturn(modifiedTeam);
+
+        String requestBody = objectMapper.writeValueAsString(teamInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/teams/{teamId}", teamId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(teamId))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Movistar"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.country").value("España"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("movistar@movistar.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.budget").value(150));
+
+        verify(teamService, times(1)).modify(eq(teamId), any(TeamInDto.class));
+    }
+
     //TODO testModifyTeamNotFound
+
+    @Test
+    public void testModifyTeamNotFound() throws Exception {
+        long teamId = 999L;
+
+        TeamInDto teamInDto = new TeamInDto("Movistar", "España", "movistar@movistar.com", 150, LocalDate.now());
+
+        // El servicio lanza la excepción
+        when(teamService.modify(eq(teamId), any(TeamInDto.class)))
+                .thenThrow(new TeamNotFoundException());
+
+        String requestBody = objectMapper.writeValueAsString(teamInDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/teams/{teamId}", teamId)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+
+        verify(teamService, times(1)).modify(eq(teamId), any(TeamInDto.class));
+    }
+
     //TODO testmodifyTeamReturn400
+
+    @Test
+    public void modifyTeamReturn400() throws Exception {
+
+        TeamInDto missingDto = new TeamInDto();
+        missingDto.setEmail("movistar@movistar.com");
+        missingDto.setBudget(150);
+        missingDto.setFundationDate(LocalDate.now());
+
+        MvcResult result = mockMvc.perform(put("/teams/{teamId}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(missingDto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorMessages.name").value("El campo name es obligatorio"))
+                .andExpect(jsonPath("$.errorMessages.country").value("El campo country es obligatorio"))
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+        verify(teamService, never()).modify(anyLong(), any(TeamInDto.class));
+
+    }
 
 }
