@@ -1,7 +1,9 @@
 package com.svalero.tourfrance;
 
+import com.svalero.tourfrance.domain.Cyclist;
 import com.svalero.tourfrance.domain.Stage;
 import com.svalero.tourfrance.domain.dto.*;
+import com.svalero.tourfrance.exception.CyclistNotFoundException;
 import com.svalero.tourfrance.exception.StageNotFoundException;
 import com.svalero.tourfrance.repository.ClimbRepository;
 import com.svalero.tourfrance.repository.StageRepository;
@@ -42,6 +44,7 @@ public class StageServiceTests {
 
     @Mock
     private ClimbRepository climbRepository;
+
 
     @Test
     public void testGetAll(){
@@ -132,6 +135,155 @@ public class StageServiceTests {
         verify(stageRepository, times(0)).findAll();
         verify(stageRepository, times(1)).findByArrival("Gavarnie");
         verify(stageRepository, times(0)).findByDepartureAndArrival("Sant Luz", "");
+        verify(stageRepository, times(0)).findByDeparture("Sant Luz");
+    }
+
+    @Test
+    public void testGetAllByType() {
+        List<Stage> mockStageList = List.of(
+                new Stage(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now(), new ArrayList<>())
+        );
+        List<StageOutDto> mockStageDtoList = List.of(
+                new StageOutDto(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now())
+        );
+
+        when(stageRepository.findByType("montaña")).thenReturn(mockStageList);
+        when(modelMapper.map(mockStageList, new TypeToken<List<StageOutDto>>() {
+        }.getType())).thenReturn(mockStageDtoList);
+
+        // listado de stage sin aplicar ningún filtro
+        List<StageOutDto> stageList = stageService.getAll("", "", "montaña");
+        assertEquals(1, stageList.size());
+        assertEquals("Sant Luz", stageList.getFirst().getDeparture());
+        assertEquals("montaña", stageList.getFirst().getType());
+
+        //mirar todas las opciones según el if
+        verify(stageRepository, times(0)).findByDepartureAndArrivalAndType("", "", "");
+        verify(stageRepository, times(0)).findByArrivalAndType("", "");
+        verify(stageRepository, times(0)).findByDepartureAndType("", "");
+        verify(stageRepository, times(1)).findByType("montaña");
+        verify(stageRepository, times(0)).findAll();
+        verify(stageRepository, times(0)).findByArrival("Gavarnie");
+        verify(stageRepository, times(0)).findByDepartureAndArrival("Sant Luz", "");
+        verify(stageRepository, times(0)).findByDeparture("Sant Luz");
+    }
+
+    @Test
+    public void testGetAllByDepartureAndArrival() {
+        List<Stage> mockStageList = List.of(
+                new Stage(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now(), new ArrayList<>())
+        );
+        List<StageOutDto> mockStageDtoList = List.of(
+                new StageOutDto(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now())
+        );
+
+        when(stageRepository.findByDepartureAndArrival("Sant Luz", "Gavarnie")).thenReturn(mockStageList);
+        when(modelMapper.map(mockStageList, new TypeToken<List<StageOutDto>>() {
+        }.getType())).thenReturn(mockStageDtoList);
+
+        // listado de stage sin aplicar ningún filtro
+        List<StageOutDto> stageList = stageService.getAll("Sant Luz", "Gavarnie", "");
+        assertEquals(1, stageList.size());
+        assertEquals("Sant Luz", stageList.getFirst().getDeparture());
+        assertEquals("montaña", stageList.getFirst().getType());
+
+        //mirar todas las opciones según el if
+        verify(stageRepository, times(0)).findByDepartureAndArrivalAndType("", "", "");
+        verify(stageRepository, times(0)).findByArrivalAndType("", "");
+        verify(stageRepository, times(0)).findByDepartureAndType("", "");
+        verify(stageRepository, times(0)).findByType("montaña");
+        verify(stageRepository, times(0)).findAll();
+        verify(stageRepository, times(0)).findByArrival("Gavarnie");
+        verify(stageRepository, times(1)).findByDepartureAndArrival("Sant Luz", "Gavarnie");
+        verify(stageRepository, times(0)).findByDeparture("Sant Luz");
+    }
+
+    @Test
+    public void testGetAllByDepartureAndType() {
+        List<Stage> mockStageList = List.of(
+                new Stage(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now(), new ArrayList<>())
+        );
+        List<StageOutDto> mockStageDtoList = List.of(
+                new StageOutDto(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now())
+        );
+
+        when(stageRepository.findByDepartureAndType("Sant Luz", "montaña")).thenReturn(mockStageList);
+        when(modelMapper.map(mockStageList, new TypeToken<List<StageOutDto>>() {
+        }.getType())).thenReturn(mockStageDtoList);
+
+        // listado de stage sin aplicar ningún filtro
+        List<StageOutDto> stageList = stageService.getAll("Sant Luz", "", "montaña");
+        assertEquals(1, stageList.size());
+        assertEquals("Sant Luz", stageList.getFirst().getDeparture());
+        assertEquals("montaña", stageList.getFirst().getType());
+
+        //mirar todas las opciones según el if
+        verify(stageRepository, times(0)).findByDepartureAndArrivalAndType("", "", "");
+        verify(stageRepository, times(0)).findByArrivalAndType("", "");
+        verify(stageRepository, times(1)).findByDepartureAndType("Sant Luz", "montaña");
+        verify(stageRepository, times(0)).findByType("montaña");
+        verify(stageRepository, times(0)).findAll();
+        verify(stageRepository, times(0)).findByArrival("Gavarnie");
+        verify(stageRepository, times(0)).findByDepartureAndArrival("Sant Luz", "Gavarnie");
+        verify(stageRepository, times(0)).findByDeparture("Sant Luz");
+    }
+    @Test
+    public void testGetAllByArrivalAndType() {
+        List<Stage> mockStageList = List.of(
+                new Stage(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now(), new ArrayList<>())
+        );
+        List<StageOutDto> mockStageDtoList = List.of(
+                new StageOutDto(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now())
+        );
+
+        when(stageRepository.findByArrivalAndType("Gavarnie", "montaña")).thenReturn(mockStageList);
+        when(modelMapper.map(mockStageList, new TypeToken<List<StageOutDto>>() {
+        }.getType())).thenReturn(mockStageDtoList);
+
+        // listado de stage sin aplicar ningún filtro
+        List<StageOutDto> stageList = stageService.getAll("", "Gavarnie", "montaña");
+        assertEquals(1, stageList.size());
+        assertEquals("Sant Luz", stageList.getFirst().getDeparture());
+        assertEquals("montaña", stageList.getFirst().getType());
+
+        //mirar todas las opciones según el if
+        verify(stageRepository, times(0)).findByDepartureAndArrivalAndType("", "", "");
+        verify(stageRepository, times(1)).findByArrivalAndType("Gavarnie", "montaña");
+        verify(stageRepository, times(0)).findByDepartureAndType("Sant Luz", "montaña");
+        verify(stageRepository, times(0)).findByType("montaña");
+        verify(stageRepository, times(0)).findAll();
+        verify(stageRepository, times(0)).findByArrival("Gavarnie");
+        verify(stageRepository, times(0)).findByDepartureAndArrival("Sant Luz", "Gavarnie");
+        verify(stageRepository, times(0)).findByDeparture("Sant Luz");
+    }
+
+    @Test
+    public void testGetAllByDepartureAndArrivalAndType() {
+        List<Stage> mockStageList = List.of(
+                new Stage(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now(), new ArrayList<>())
+        );
+        List<StageOutDto> mockStageDtoList = List.of(
+                new StageOutDto(1, "Sant Luz", "Gavarnie", "montaña", 4000, 150, true, LocalDate.now())
+        );
+
+        when(stageRepository.findByDepartureAndArrivalAndType("Sant Luz","Gavarnie", "montaña")).thenReturn(mockStageList);
+        when(modelMapper.map(mockStageList, new TypeToken<List<StageOutDto>>() {
+        }.getType())).thenReturn(mockStageDtoList);
+
+        // listado de stage sin aplicar ningún filtro
+        List<StageOutDto> stageList = stageService.getAll("Sant Luz", "Gavarnie", "montaña");
+        assertEquals(1, stageList.size());
+        assertEquals("Sant Luz", stageList.getFirst().getDeparture());
+        assertEquals("montaña", stageList.getFirst().getType());
+
+        //mirar todas las opciones según el if
+        verify(stageRepository, times(1)).findByDepartureAndArrivalAndType("Sant Luz", "Gavarnie", "montaña");
+        verify(stageRepository, times(0)).findByArrivalAndType("Gavarnie", "montaña");
+        verify(stageRepository, times(0)).findByDepartureAndType("Sant Luz", "montaña");
+        verify(stageRepository, times(0)).findByType("montaña");
+        verify(stageRepository, times(0)).findAll();
+        verify(stageRepository, times(0)).findByArrival("Gavarnie");
+        verify(stageRepository, times(0)).findByDepartureAndArrival("Sant Luz", "Gavarnie");
         verify(stageRepository, times(0)).findByDeparture("Sant Luz");
     }
 
@@ -285,6 +437,23 @@ public class StageServiceTests {
         verify(stageRepository).findById(stageId);
         verify(stageRepository).deleteById(stageId);
     }
+
+    @Test
+    public void testRemoveStageNotFound() throws StageNotFoundException {
+        long stageId = 1;
+
+        Stage stage = new Stage();
+        stage.setId(stageId);
+
+        try {
+            when(stageRepository.findById(stageId).orElseThrow(StageNotFoundException::new))
+                    .thenThrow(StageNotFoundException.class);
+        } catch (StageNotFoundException e) {
+
+        }
+        assertThrows(StageNotFoundException.class, () -> stageService.remove(stageId));
+    }
+
 
 
 }

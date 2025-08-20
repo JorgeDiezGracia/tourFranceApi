@@ -24,7 +24,7 @@ import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TeamController.class)
@@ -164,5 +164,27 @@ public class TeamControllerTests {
         assertEquals("must be greater than or equal to 0", errorResponse.getErrorMessages().get("budget"));
 
     }
+
+    // testRemoveTeamNoContent
+
+    @Test
+    public void testRemoveTeamNoContent() throws Exception {
+        long teamId = 1L;
+
+        doNothing().when(teamService).remove(teamId);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/teams/{teamId}", teamId))
+                .andExpect(status().isNoContent());
+
+        verify(teamService, times(1)).remove(teamId);
+    }
+
+
+    //TODO testRemoveTeamNotFound
+
+
+    //TODO testModifyTeamOk
+    //TODO testModifyTeamNotFound
+    //TODO testmodifyTeamReturn400
 
 }
