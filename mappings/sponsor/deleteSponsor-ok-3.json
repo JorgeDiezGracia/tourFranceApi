@@ -2,13 +2,12 @@
   "priority": 1,
   "request": {
     "method": "DELETE",
-    "url": "/sponsors/1"
+    "urlPattern": "/sponsors/3"
   },
   "response": {
-    "status": 500,
-    "headers": {
+    "status": 204,
+    "headers":{
       "Content-Type": "application/json"
-    },
-    "bodyFileName": "internalServerError.json"
+    }
   }
 }

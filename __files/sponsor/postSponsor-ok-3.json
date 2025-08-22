@@ -1,0 +1,14 @@
+{
+  "code": 200,
+  "message": "cyclist created correctly",
+
+  "sponsor": {
+    "name": "UAD",
+    "country": "Emiratos Arabes",
+    "email": "uad@uad.com",
+    "employes": 1500,
+    "funding": 150,
+    "endcontract": "2028-06-30",
+    "teamid": 65
+  }
+}

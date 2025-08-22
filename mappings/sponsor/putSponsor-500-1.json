@@ -1,7 +1,7 @@
 {
   "priority": 1,
   "request": {
-    "method": "DELETE",
+    "method": "PUT",
     "url": "/sponsors/1"
   },
   "response": {

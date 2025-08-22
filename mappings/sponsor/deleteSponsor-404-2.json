@@ -2,13 +2,13 @@
   "priority": 1,
   "request": {
     "method": "DELETE",
-    "url": "/sponsors/1"
+    "url": "/sponsors/2"
   },
   "response": {
-    "status": 500,
-    "headers": {
+    "status": 404,
+    "headers":{
       "Content-Type": "application/json"
     },
-    "bodyFileName": "internalServerError.json"
+    "bodyFileName": "SponsorNotFound.json"
   }
 }

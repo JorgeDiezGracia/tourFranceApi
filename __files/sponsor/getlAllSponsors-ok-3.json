@@ -1,0 +1,29 @@
+[
+  {
+    "name": "UAD",
+    "country": "Emiratos Arabes",
+    "email": "uad@uad.com",
+    "employes": 1500,
+    "funding": 150,
+    "endcontract": "2028-06-30",
+    "teamid": 65
+  },
+  {
+    "name": "Visma",
+    "country": "Dinamarca",
+    "email": "visma@visma.com",
+    "employes": 3000,
+    "funding": 120,
+    "endcontract": "2029-06-30",
+    "teamid": 98
+  },
+  {
+    "name": "Movistar",
+    "country": "España",
+    "email": "movistar@movistar.com",
+    "employes": 4500,
+    "funding": 80,
+    "endcontract": "2030-06-30",
+    "teamid": 1
+  }
+]
