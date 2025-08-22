@@ -1,0 +1,24 @@
+[
+  {
+    "name": "UAE",
+    "country": "Emiratos Arabes",
+    "email": "uae@uae.com",
+    "budget": 320,
+    "fundationdate": "2008-06-30"
+  },
+  {
+    "name": "Visma Lease a Bike",
+    "country": "Dinamarca",
+    "email": "vismalease@visma.com",
+    "budget": 280,
+    "fundationdate": "2002-06-30"
+  },
+  {
+    "name": "Movistar",
+    "country": "España",
+    "email": "telefonica@telefonica.com",
+    "budget": 120,
+    "fundationdate": "1998-06-30"
+  }
+
+]

@@ -1,0 +1,12 @@
+{
+  "code": 200,
+  "message": "team modified correctly",
+
+  "team": {
+    "name": "UAE",
+    "country": "Emiratos Arabes",
+    "email": "uae@uae.com",
+    "budget": 320,
+    "fundationdate": "2008-06-30"
+  }
+}
