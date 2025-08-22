@@ -1,8 +1,8 @@
 {
   "priority": 1,
   "request": {
-    "method": "DELETE",
-    "url": "/sponsors/1"
+    "method": "POST",
+    "url": "/teams/1/sponsors"
   },
   "response": {
     "status": 500,
