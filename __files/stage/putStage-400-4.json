@@ -1,0 +1,4 @@
+{
+  "code": 400,
+  "message": "The 'departure' field cannot be empty"
+}
