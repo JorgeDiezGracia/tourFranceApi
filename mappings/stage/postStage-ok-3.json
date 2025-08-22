@@ -1,0 +1,19 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/stages/3",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$[?(@.departure =~ /^(?!\\s*$).+/)]" },
+      { "matchesJsonPath": "$[?(@.arrival =~ /^(?!\\s*$).+/)]" },
+      { "matchesJsonPath": "$[?(@.kilometers >= 0)]" }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "stage/postStage-ok-3.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
