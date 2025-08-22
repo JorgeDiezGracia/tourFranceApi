@@ -2,13 +2,13 @@
   "priority": 1,
   "request": {
     "method": "GET",
-    "url": "/climbs/3"
+    "url": "/teams/1"
   },
   "response": {
-    "status": 200,
-    "headers":{
+    "status": 500,
+    "headers": {
       "Content-Type": "application/json"
     },
-    "bodyFileName": "climb/getClimb-ok-3.json"
+    "bodyFileName": "internalServerError.json"
   }
 }

@@ -9,7 +9,7 @@
   },
   "response": {
     "status": 400,
-    "bodyFileName": "postCyclist-400-4.json",
+    "bodyFileName": "cyclist/postCyclist-400-4.json",
     "headers": {
       "Content-Type": "application/json"
     }

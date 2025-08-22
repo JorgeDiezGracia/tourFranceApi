@@ -9,6 +9,6 @@
     "headers":{
       "Content-Type": "application/json"
     },
-    "bodyFileName": "getCyclist-ok-3.json"
+    "bodyFileName": "cyclist/getCyclist-ok-3.json"
   }
 }

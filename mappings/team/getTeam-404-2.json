@@ -2,13 +2,13 @@
   "priority": 1,
   "request": {
     "method": "GET",
-    "url": "/climbs/3"
+    "url": "/teams/2"
   },
   "response": {
-    "status": 200,
-    "headers":{
+    "status": 404,
+    "headers": {
       "Content-Type": "application/json"
     },
-    "bodyFileName": "climb/getClimb-ok-3.json"
+    "bodyFileName": "teamNotFound.json"
   }
 }

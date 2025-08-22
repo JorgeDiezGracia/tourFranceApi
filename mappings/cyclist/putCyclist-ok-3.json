@@ -13,7 +13,7 @@
   },
   "response": {
     "status": 200,
-    "bodyFileName": "putCyclist-ok-3.json",
+    "bodyFileName": "cyclist/putCyclist-ok-3.json",
     "headers": {
       "Content-Type": "application/json"
     }
