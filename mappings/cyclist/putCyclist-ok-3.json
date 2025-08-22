@@ -1,0 +1,21 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "PUT",
+    "urlPattern": "/cyclists/3",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$[?(@.name =~ /^(?!\\s*$).+/)]",
+        "matchesJsonPath": "$[?(@.specialty =~ /^(?!\\s*$).+/)]",
+        "matchesJsonPath": "$[?(@.titles >=0)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "putCyclist-ok-3.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

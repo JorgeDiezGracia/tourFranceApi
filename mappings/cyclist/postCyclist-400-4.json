@@ -1,0 +1,17 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/teams/4/cyclists",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$[?(!@.nombre || @.nombre == '')]" }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "bodyFileName": "postCyclist-400-4.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
