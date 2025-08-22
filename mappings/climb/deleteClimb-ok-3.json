@@ -2,13 +2,12 @@
   "priority": 1,
   "request": {
     "method": "DELETE",
-    "url": "/climbs/2"
+    "urlPattern": "/climbs/3"
   },
   "response": {
-    "status": 404,
+    "status": 204,
     "headers":{
       "Content-Type": "application/json"
-    },
-    "bodyFileName": "climbNotFound.json"
+    }
   }
 }

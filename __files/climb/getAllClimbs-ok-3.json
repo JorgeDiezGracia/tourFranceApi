@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Tourmalet",
+    "category": "Hors Category",
+    "region": "Pirineos",
+    "slope": 1200,
+    "lastascent": "2024-06-30",
+    "stageid": 1
+  },
+  {
+    "name": "Hautacam",
+    "category": "Hors Caregory",
+    "region": "Pirineos",
+    "slope": 1300,
+    "lastascent": "2025-09-25",
+    "stageid": 2
+  },
+  {
+    "name": "Galibier",
+    "category": "Hors Category",
+    "region": "Alpes",
+    "slope": 1900,
+    "lastascent": "2023-06-15",
+    "stageid": 3
+  }
+]
