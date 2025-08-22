@@ -2,13 +2,13 @@
   "priority": 1,
   "request": {
     "method": "GET",
-    "url": "/climbs/3"
+    "url": "/teams/3"
   },
   "response": {
     "status": 200,
     "headers":{
       "Content-Type": "application/json"
     },
-    "bodyFileName": "climb/getClimb-ok-3.json"
+    "bodyFileName": "team/getTeam-ok-3.json"
   }
 }

@@ -2,16 +2,16 @@
   "priority": 1,
   "request": {
     "method": "POST",
-    "url": "/teams/3/cyclists",
+    "url": "/teams/3",
     "bodyPatterns": [
       { "matchesJsonPath": "$[?(@.name =~ /^(?!\\s*$).+/)]" },
-      { "matchesJsonPath": "$[?(@.speciality =~ /^(?!\\s*$).+/)]" },
-      { "matchesJsonPath": "$[?(@.titles >= 0)]" }
+      { "matchesJsonPath": "$[?(@.country =~ /^(?!\\s*$).+/)]" },
+      { "matchesJsonPath": "$[?(@.budget >= 0)]" }
     ]
   },
   "response": {
     "status": 200,
-    "bodyFileName": "cyclist/postCyclist-ok-3.json",
+    "bodyFileName": "team/postTeam-ok-3.json",
     "headers": {
       "Content-Type": "application/json"
     }
