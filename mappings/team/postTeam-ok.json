@@ -10,7 +10,7 @@
     ]
   },
   "response": {
-    "status": 200,
+    "status": 201,
     "bodyFileName": "team/postTeam-ok-3.json",
     "headers": {
       "Content-Type": "application/json"
