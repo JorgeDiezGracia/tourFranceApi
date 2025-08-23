@@ -5,9 +5,8 @@
     "urlPattern": "/climbs/3",
     "bodyPatterns": [
       {
-        "matchesJsonPath": "$[?(@.name =~ /^(?!\\s*$).+/)]",
-        "matchesJsonPath": "$[?(@.category =~ /^(?!\\s*$).+/)]",
-        "matchesJsonPath": "$[?(@.slope >=0)]"
+        "matchesJsonPath": "$[?(@.name =~ /^(?!\\s*$).+/)]"
+
       }
     ]
   },

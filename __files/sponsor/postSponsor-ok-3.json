@@ -1,6 +1,6 @@
 {
   "code": 200,
-  "message": "cyclist created correctly",
+  "message": "sponsor created correctly",
 
   "sponsor": {
     "name": "UAD",

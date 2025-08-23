@@ -1,8 +1,8 @@
 {
-  "priority": 1,
+
   "request": {
     "method": "POST",
-    "url": "/teams/4",
+    "url": "/teams",
     "bodyPatterns": [
       { "matchesJsonPath": "$[?(!@.nombre || @.nombre == '')]" }
     ]
