@@ -1,0 +1,14 @@
+{
+  "code": 200,
+  "message": "stage modified correctly",
+
+  "stage": {
+    "departure": "Sant Luz",
+    "arrival": "Gedre",
+    "type": "alta montaña",
+    "elevation": 4800,
+    "kilometers": 150,
+    "mountainstage": true,
+    "stagedate": "2025-06-30"
+  }
+}

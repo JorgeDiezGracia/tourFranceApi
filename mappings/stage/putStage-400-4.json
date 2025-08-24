@@ -2,20 +2,18 @@
   "priority": 1,
   "request": {
     "method": "PUT",
-    "urlPattern": "/cyclists/4",
+    "urlPattern": "/stages/4",
     "bodyPatterns": [
       {
-        "matchesJsonPath": "$[?(@.name =~ /^\\s*$/)]"
+        "matchesJsonPath": "$[?(@.departure =~ /^\\s*$/)]"
       }
     ]
   },
   "response": {
     "status": 400,
-    "bodyFileName": "cyclist/putCyclist-400-4.json",
+    "bodyFileName": "stage/putStage-400-4.json",
     "headers": {
       "Content-Type": "application/json"
     }
   }
 }
-
-

@@ -1,15 +1,15 @@
 {
-  "priority": 1,
+
   "request": {
     "method": "POST",
-    "url": "/stages/4/climbs",
+    "url": "/stages",
     "bodyPatterns": [
-      { "matchesJsonPath": "$[?(!@.name || @.name == '')]" }
+      { "matchesJsonPath": "$[?(!@.departure || @.departure == '')]" }
     ]
   },
   "response": {
     "status": 400,
-    "bodyFileName": "climb/postClimb-400-4.json",
+    "bodyFileName": "stage/postStage-400-4.json",
     "headers": {
       "Content-Type": "application/json"
     }
