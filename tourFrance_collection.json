@@ -1,4 +1,3 @@
-
 {
   "v": 6,
   "name": "tourFrance",
@@ -12,7 +11,7 @@
           "v": "11",
           "name": "teams",
           "method": "GET",
-          "endpoint": "http://localhost:8080/teams",
+          "endpoint": "<<host>><<port>>/teams",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -33,7 +32,7 @@
           "v": "11",
           "name": "teams",
           "method": "POST",
-          "endpoint": "http://localhost:8080/teams",
+          "endpoint": "<<host>><<port>>/teams",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -54,7 +53,7 @@
           "v": "11",
           "name": "teams/{teamId}",
           "method": "DELETE",
-          "endpoint": "http://localhost:8080/teams/1",
+          "endpoint": "<<host>><<port>>/teams/3",
           "params": [
             {
               "key": "teamId",
@@ -82,7 +81,7 @@
           "v": "11",
           "name": "teams/{teamId}",
           "method": "GET",
-          "endpoint": "http://localhost:8080/teams/65",
+          "endpoint": "<<host>><<port>>/teams/65",
           "params": [
             {
               "key": "teamId",
@@ -110,7 +109,7 @@
           "v": "11",
           "name": "teams/{teamId}",
           "method": "PUT",
-          "endpoint": "http://localhost:8080/teams/65",
+          "endpoint": "<<host>><<port>>/teams/65",
           "params": [
             {
               "key": "teamId",
@@ -151,7 +150,7 @@
           "v": "11",
           "name": "cyclists",
           "method": "GET",
-          "endpoint": "http://localhost:8080/cyclists",
+          "endpoint": "<<host>><<port>>/cyclists",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -172,7 +171,7 @@
           "v": "11",
           "name": "teams/{teamId}/cyclists",
           "method": "POST",
-          "endpoint": "http://localhost:8080/teams/98/cyclists",
+          "endpoint": "<<host>><<port>>/teams/98/cyclists",
           "params": [
             {
               "key": "teamId",
@@ -200,7 +199,7 @@
           "v": "11",
           "name": "cyclists/{cyclistId}",
           "method": "DELETE",
-          "endpoint": "http://localhost:8080/cyclists/98",
+          "endpoint": "<<host>><<port>>/cyclists/98",
           "params": [
             {
               "key": "cyclistId",
@@ -228,7 +227,7 @@
           "v": "11",
           "name": "cyclists/{cyclistId}",
           "method": "GET",
-          "endpoint": "http://localhost:8080/cyclists/:cyclistId",
+          "endpoint": "<<host>><<port>>/cyclists/:cyclistId",
           "params": [
             {
               "key": "cyclistId",
@@ -256,7 +255,7 @@
           "v": "11",
           "name": "cyclists/{cyclistId}",
           "method": "PUT",
-          "endpoint": "http://localhost:8080/cyclists/134",
+          "endpoint": "<<host>><<port>>/cyclists/134",
           "params": [
             {
               "key": "cyclistId",
@@ -297,7 +296,7 @@
           "v": "11",
           "name": "stages",
           "method": "GET",
-          "endpoint": "http://localhost:8080/stages",
+          "endpoint": "<<host>><<port>>/stages",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -318,7 +317,7 @@
           "v": "11",
           "name": "stages",
           "method": "POST",
-          "endpoint": "http://localhost:8080/stages",
+          "endpoint": "<<host>><<port>>/stages",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -339,7 +338,7 @@
           "v": "11",
           "name": "stages/{stageId}",
           "method": "DELETE",
-          "endpoint": "http://localhost:8080/stages/1",
+          "endpoint": "<<host>><<port>>/stages/1",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -360,7 +359,7 @@
           "v": "11",
           "name": "stages/{stageId}",
           "method": "GET",
-          "endpoint": "http://localhost:8080/stages/2",
+          "endpoint": "<<host>><<port>>/stages/2",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -381,7 +380,7 @@
           "v": "11",
           "name": "stages/{stageId}",
           "method": "PUT",
-          "endpoint": "http://localhost:8080/stages/3",
+          "endpoint": "<<host>><<port>>/stages/3",
           "params": [
             {
               "key": "stageId",
@@ -422,7 +421,7 @@
           "v": "11",
           "name": "climbs",
           "method": "GET",
-          "endpoint": "http://localhost:8080/climbs",
+          "endpoint": "<<host>><<port>>/climbs",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -443,7 +442,7 @@
           "v": "11",
           "name": "stages/{stageId}/climbs",
           "method": "POST",
-          "endpoint": "http://localhost:8080/stages/3/climbs",
+          "endpoint": "<<host>><<port>>/stages/3/climbs",
           "params": [
             {
               "key": "stageId",
@@ -471,7 +470,7 @@
           "v": "11",
           "name": "climbs/{climbId}",
           "method": "DELETE",
-          "endpoint": "http://localhost:8080/climbs/1",
+          "endpoint": "<<host>><<port>>/climbs/1",
           "params": [
             {
               "key": "climbId",
@@ -499,7 +498,7 @@
           "v": "11",
           "name": "climbs/{climbId}",
           "method": "GET",
-          "endpoint": "http://localhost:8080/climbs/1",
+          "endpoint": "<<host>><<port>>/climbs/4",
           "params": [
             {
               "key": "climbId",
@@ -527,15 +526,8 @@
           "v": "11",
           "name": "climbs/{climbId}",
           "method": "PUT",
-          "endpoint": "http://localhost:8080/climbs/1",
-          "params": [
-            {
-              "key": "climbId",
-              "value": "1",
-              "active": false,
-              "description": ""
-            }
-          ],
+          "endpoint": "<<host>><<port>>/climbs/4",
+          "params": [],
           "headers": [],
           "preRequestScript": "",
           "testScript": "",
@@ -546,7 +538,7 @@
           },
           "body": {
             "contentType": "application/json",
-            "body": "{\n  \"name\": \"Troumousse\",\n  \"category\": \"Hors Category\",\n  \"region\": \"Pyrenees\",\n  \"altitude\": 2.100,\n  \"lastAscent\": \"2005-07-21\",\n  \"stageId\": 2\n}"
+            "body": "{\n  \n  \"category\": \"Hors Category\",\n  \"region\": \"Pyrenees\",\n  \"altitude\": 2.100,\n  \"slope\": 100,\n  \"lastAscent\": \"2005-07-21\",\n  \"stageId\": 2\n}"
           },
           "requestVariables": [],
           "responses": {}
@@ -568,7 +560,7 @@
           "v": "11",
           "name": "sponsors",
           "method": "GET",
-          "endpoint": "http://localhost:8080/sponsors",
+          "endpoint": "<<host>><<port>>/sponsors",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -589,7 +581,7 @@
           "v": "11",
           "name": "teams/{teamId}/sponsors",
           "method": "POST",
-          "endpoint": "http://localhost:8080/teams/65/sponsors",
+          "endpoint": "<<host>><<port>>/teams/65/sponsors",
           "params": [
             {
               "key": "teamId",
@@ -617,7 +609,7 @@
           "v": "11",
           "name": "sponsors/{sponsorId}",
           "method": "GET",
-          "endpoint": "http://localhost:8080/sponsors/1",
+          "endpoint": "<<host>><<port>>/sponsors/",
           "params": [
             {
               "key": "sponsorId",
@@ -645,7 +637,7 @@
           "v": "11",
           "name": "sponsors/{sponsorId}",
           "method": "DELETE",
-          "endpoint": "http://localhost:8080/sponsors/2",
+          "endpoint": "<<host>><<port>>/sponsors/2",
           "params": [
             {
               "key": "sponsorId",
@@ -673,7 +665,7 @@
           "v": "11",
           "name": "sponsors/{sponsorId}",
           "method": "PUT",
-          "endpoint": "http://localhost:8080/sponsors/1",
+          "endpoint": "<<host>><<port>>/sponsors/1",
           "params": [
             {
               "key": "sponsorId",
