@@ -1,0 +1,708 @@
+{
+  "v": 6,
+  "name": "tourFrance",
+  "folders": [
+    {
+      "v": 6,
+      "name": "teams",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "teams",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/teams",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Movistar Team\",\n  \"country\": \"Spain\",\n  \"budget\": 2500000.0,\n  \"isActive\": true\n\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/{teamId}",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/teams/3",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "101",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/{teamId}",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/teams/65",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "65",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/{teamId}",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/teams/65",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "65",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Visma\",\n  \"email\": \"vismaleaseabike@gmail.com\",\n  \"country\": \"Denmark\",\n  \"budget\": 290,\n  \"fundationDate\": \"2009-10-03\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_mcwa4byn_81594d73-4e19-4bf1-917c-bdec9e554e5d"
+    },
+    {
+      "v": 6,
+      "name": "cyclists",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "cyclists",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/cyclists",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/{teamId}/cyclists",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/98/cyclists",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "98",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n\n  \"titles\": -3.0,\n  \"weight\": 62.0,\n  \"birthdate\": \"1996-06-03\",\n  \"isLeader\": false\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists/{cyclistId}",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/cyclists/98",
+          "params": [
+            {
+              "key": "cyclistId",
+              "value": "140",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists/{cyclistId}",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/cyclists/:cyclistId",
+          "params": [
+            {
+              "key": "cyclistId",
+              "value": "1",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists/{cyclistId}",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/cyclists/134",
+          "params": [
+            {
+              "key": "cyclistId",
+              "value": "134",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Narváez\",\n  \"specialty\": \"Esprinter y gregario\",\n  \"birthplace\": \"Colombia\",\n  \"titles\": 2,\n  \"birthdate\": \"2009-10-03\",\n  \"teamId\": 98\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_md01buek_4a4cd913-4e88-4d5a-96c9-b63af62aa72f"
+    },
+    {
+      "v": 6,
+      "name": "stages",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "stages",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/stages",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/stages",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"Paris\",\n  \"arrival\": \"Niza\",\n  \"kilometers\": 220.0\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages/{stageId}",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/stages/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages/{stageId}",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/stages/2",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": ""
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages/{stageId}",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/stages/3",
+          "params": [
+            {
+              "key": "stageId",
+              "value": "3",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"Montpellier\",\n  \"arrival\": \"Mont Ventoux\",\n  \"type\": \"rompepiernas\",\n  \"kilometers\": 214,\n  \"stageDate\": \"2025-10-07\",\n  \"longitude\": 41.354,\n  \"latitude\": -87.142\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_mdeyfexi_9f5f5443-da0e-4380-901d-afd2a4c99675"
+    },
+    {
+      "v": 6,
+      "name": "climbs",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "climbs",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/climbs",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages/{stageId}/climbs",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/stages/3/climbs",
+          "params": [
+            {
+              "key": "stageId",
+              "value": "3",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n\n  \"name\": \"Le Col\",\n  \"category\": \"Hors Category\",\n  \"region\": \"Alps\",\n  \"altitude\": 2.400,\n  \"lastAscent\": \"2018-07-21\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs/{climbId}",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/climbs/1",
+          "params": [
+            {
+              "key": "climbId",
+              "value": "",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs/{climbId}",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/climbs/4",
+          "params": [
+            {
+              "key": "climbId",
+              "value": "1",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs/{climbId}",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/climbs/4",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \n  \"category\": \"Hors Category\",\n  \"region\": \"Pyrenees\",\n  \"altitude\": 2.100,\n  \"slope\": 100,\n  \"lastAscent\": \"2005-07-21\",\n  \"stageId\": 2\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_mdhn0fjd_935e2f16-d3d1-41a4-bf6c-27fa3d5dddbf"
+    },
+    {
+      "v": 6,
+      "name": "sponsors",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "sponsors",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/sponsors",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams/{teamId}/sponsors",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/65/sponsors",
+          "params": [
+            {
+              "key": "teamId",
+              "value": "65",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Decathlon\",\n  \"country\": \"Francia\",\n  \"email\": \"decathlon@france.es\",\n  \"employees\": 8.500,\n  \"funding\": 60.00,\n  \"endContract\": \"2025-12-12\",\n  \"mainSponsor\": true\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors/{sponsorId}",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/sponsors/",
+          "params": [
+            {
+              "key": "sponsorId",
+              "value": "1",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors/{sponsorId}",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/sponsors/2",
+          "params": [
+            {
+              "key": "sponsorId",
+              "value": "2",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors/{sponsorId}",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/sponsors/1",
+          "params": [
+            {
+              "key": "sponsorId",
+              "value": "1",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Telefónica\",\n  \"country\": \"Francia\",\n  \"email\": \"decathlon@decathlon.com\",\n  \"funding\": 60.00,\n  \"endContract\": \"2025-12-12\",\n  \"teamId\": 65\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_mdifvi3s_328105ef-258c-419f-bf47-c73e330caf5f"
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [],
+  "_ref_id": "coll_mcwa3zlp_2768a33f-f3b4-4ecf-b999-63a36fbe920a"
+}

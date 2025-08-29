@@ -1,0 +1,16 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "url": "/cyclists"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "cyclist/getAllCyclists-ok-3.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
+
+

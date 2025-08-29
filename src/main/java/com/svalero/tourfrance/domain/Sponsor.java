@@ -37,7 +37,7 @@ public class Sponsor {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
-    @JsonManagedReference(value = "teams_sponsors")
+    @JsonBackReference(value = "teams_sponsors")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Team team;
 

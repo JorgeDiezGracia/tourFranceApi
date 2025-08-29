@@ -1,0 +1,14 @@
+{
+  "code": 201,
+  "message": "cyclist created correctly",
+
+ "cyclist": {
+  "name": "Pogaçar",
+  "speciality": "escalador",
+  "birthplace": "Eslovenia",
+  "titles": 105,
+  "birthdate": "2021-06-30",
+  "teamid": 65
+}
+}
+

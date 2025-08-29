@@ -1,0 +1,1982 @@
+{
+  "v": 6,
+  "name": "mockTourFrance",
+  "folders": [
+    {
+      "v": 6,
+      "name": "teams",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "Allteams ",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/teams",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "\n\n",
+          "testScript": "\n\n// Check status code is 200\npw.test(\"Status code is 200\", ()=> {\n    pw.expect(pw.response.status).toBe(200);\n});\n//Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers; // array de headers\n  let contentType = \"\";\n\n  // Buscamos el header 'content-type' (case-insensitive)\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n\n  // Verificamos que contenga \"application/json\"\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Body no vacío\npw.test(\"Response returns data\", () => {\n  // verificamos que el body no esté vacío\n  pw.expect(pw.response.body.length > 0).toBe(true);\n});\n\n\n\n\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams-ok",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "\n\n// Check status code is 2xx\npw.test(\"Status code is 201\", ()=> {\n    pw.expect(pw.response.status).toBe(201);\n});\n\n// Test 2: Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers;\n  let contentType = \"\";\n\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Test 3: Body contiene datos\npw.test(\"Response contains data\", () => {\n  const bodyString = String(pw.response.body || \"\");\n  pw.expect(bodyString.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n    \"name\": \"UAE\",\n    \"country\": \"Emiratos Arabes\",\n    \"email\": \"uae@uae.com\",\n    \"budget\": 320,\n    \"fundationdate\": \"2008-06-30\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 400",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 400\npw.test(\"Status code is 400\", () => {\n  pw.expect(pw.response.status).toBe(400);\n});\n\n// Test 2: Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers;\n  let contentType = \"\";\n\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Test 3: Body contiene mensaje de error\npw.test(\"Body contains error message\", () => {\n  const body = pw.response.body;\n\n  // Comprobamos que exista la propiedad 'error' y contenga texto\n  pw.expect(body.error !== undefined).toBe(true); \n  pw.expect(body.error).toBe(\"Datos inválidos\");\n\n  // Comprobamos la propiedad 'detalle'\n  pw.expect(body.detalle !== undefined).toBe(true);\n  pw.expect(body.detalle).toBe(\"The 'name' field is required\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n    \n    \"country\": \"Emiratos Arabes\",\n    \"email\": \"uae@uae.com\",\n    \"budget\": 320,\n    \"fundationdate\": \"2008-06-30\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 500",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/teams/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 404",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/teams/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Team not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - ok",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/teams/3",
+          "params": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 204\npw.test(\"Status code is 204\", () => {\n  pw.expect(pw.response.status).toBe(204);\n});\n\n// Test 2: Body vacío (No Content)\npw.test(\"Response body is empty\", () => {\n  const body = pw.response.body;\n  pw.expect(body === null || body === \"\" || body === undefined).toBe(true);\n});\n\n// Test 3: Content-Length = 0 (cuando el servidor lo envía)\npw.test(\"Content-Length header is 0\", () => {\n  const headersArray = pw.response.headers;\n  let contentLength = \"\";\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-length\") {\n      contentLength = headersArray[i].value;\n      break;\n    }\n  }\n  // Puede que algunos servidores no envíen content-length en 204, por eso se permite \"0\" o vacío\n  pw.expect(contentLength === \"0\" || contentLength === \"\").toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 500",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/teams/1",
+          "params": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 404",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/teams/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Team not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - ok",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/teams/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'name' con valor 'UAE'\npw.test(\"Body contains correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.name).toBe(\"UAE\");\n});\n\n// Test 3: Body contiene la propiedad 'budget' y es un número mayor que 0\npw.test(\"Budget is a positive number\", () => {\n  const body = pw.response.body;\n  pw.expect(typeof body.budget).toBe(\"number\");\n  pw.expect(body.budget > 0).toBe(true);\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 500",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/teams/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Visma\",\n  \"email\": \"vismaleaseabike@gmail.com\",\n  \"country\": \"Denmark\",\n  \"budget\": 290,\n  \"fundationDate\": \"2009-10-03\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 404",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/teams/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Team not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Visma\",\n  \"email\": \"vismaleaseabike@gmail.com\",\n  \"country\": \"Denmark\",\n  \"budget\": 290,\n  \"fundationDate\": \"2009-10-03\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - ok",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/teams/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'message' esperado\npw.test(\"Body contains success message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"team modified correctly\");\n});\n\n// Test 3: Body.team existe y tiene la propiedad 'name' con valor 'UAE'\npw.test(\"Team object has correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.team.name).toBe(\"UAE\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Visma\",\n  \"email\": \"vismaleaseabike@gmail.com\",\n  \"country\": \"Denmark\",\n  \"budget\": 290,\n  \"fundationDate\": \"2009-10-03\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 400",
+          "method": "PUT",
+          "endpoint": "http://localhost:8080/teams/4",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 400\npw.test(\"Status code is 400\", () => {\n  pw.expect(pw.response.status).toBe(400);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 400\npw.test(\"Body contains error code 400\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(400);\n});\n\n// Test 3: Body contiene el mensaje de error correcto\npw.test(\"Body contains correct error message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"The 'name' field cannot be empty\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"\",\n  \"email\": \"vismaleaseabike@gmail.com\",\n  \"country\": \"Denmark\",\n  \"budget\": 290,\n  \"fundationDate\": \"2009-10-03\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_menvx6w5_1ea318a3-0abd-48d5-9003-3227c2657b99"
+    },
+    {
+      "v": 6,
+      "name": "cyclists",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "AllCyclists",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/cyclists",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Check status code is 200\npw.test(\"Status code is 200\", ()=> {\n    pw.expect(pw.response.status).toBe(200);\n});\n//Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers; // array de headers\n  let contentType = \"\";\n\n  // Buscamos el header 'content-type' (case-insensitive)\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n\n  // Verificamos que contenga \"application/json\"\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Body no vacío\npw.test(\"Response returns data\", () => {\n  // verificamos que el body no esté vacío\n  pw.expect(pw.response.body.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams 404",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/2/cyclists",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Team not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Pogaçar\",\n  \"speciality\": \"escalador\",\n  \"titles\": 3.0,\n  \"weight\": 62.0,\n  \"birthdate\": \"1996-06-03\",\n  \"isLeader\": false\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - ok",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/3/cyclists",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "\n\n// Check status code is 2xx\npw.test(\"Status code is 201\", ()=> {\n    pw.expect(pw.response.status).toBe(201);\n});\n\n// Test 2: Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers;\n  let contentType = \"\";\n\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Test 3: Body contiene datos\npw.test(\"Response contains data\", () => {\n  const bodyString = String(pw.response.body || \"\");\n  pw.expect(bodyString.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Pogaçar\",\n  \"speciality\": \"escalador\",\n  \"titles\": 3.0,\n  \"weight\": 62.0,\n  \"birthdate\": \"1996-06-03\",\n  \"isLeader\": false\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 400",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/4/cyclists",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 3: Body contiene mensaje de error\npw.test(\"Body contains error message\", () => {\n  const body = pw.response.body;\n\n  // Comprobamos que exista la propiedad 'error' y contenga texto\n  pw.expect(body.error !== undefined).toBe(true); \n  pw.expect(body.error).toBe(\"Datos inválidos\");\n\n  // Comprobamos la propiedad 'detalle'\n  pw.expect(body.detalle !== undefined).toBe(true);\n  pw.expect(body.detalle).toBe(\"The 'name' field is required\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"speciality\": \"escalador\",\n  \"titles\": 3.0,\n  \"weight\": 62.0,\n  \"birthdate\": \"1996-06-03\",\n  \"isLeader\": false\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - 500",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/cyclists/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - 404",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/cyclists/2",
+          "params": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Cyclist not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - ok",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/cyclists/3",
+          "params": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 204\npw.test(\"Status code is 204\", () => {\n  pw.expect(pw.response.status).toBe(204);\n});\n\n// Test 2: Body vacío (No Content)\npw.test(\"Response body is empty\", () => {\n  const body = pw.response.body;\n  pw.expect(body === null || body === \"\" || body === undefined).toBe(true);\n});\n\n// Test 3: Content-Length = 0 (cuando el servidor lo envía)\npw.test(\"Content-Length header is 0\", () => {\n  const headersArray = pw.response.headers;\n  let contentLength = \"\";\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-length\") {\n      contentLength = headersArray[i].value;\n      break;\n    }\n  }\n  // Puede que algunos servidores no envíen content-length en 204, por eso se permite \"0\" o vacío\n  pw.expect(contentLength === \"0\" || contentLength === \"\").toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - 500",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/cyclists/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - 404",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/cyclists/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Cyclist not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - ok",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/cyclists/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'name' con valor 'Pogaçar'\npw.test(\"Body contains correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.name).toBe(\"Pogaçar\");\n});\n\n// Test 3: Body contiene la propiedad 'titles' y es un número igual o mayor que 0\npw.test(\"Title is a positive number\", () => {\n  const body = pw.response.body;\n  pw.expect(typeof body.titles).toBe(\"number\");\n  pw.expect(body.titles >= 0).toBe(true);\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - 500",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/cyclists/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Narváez\",\n  \"specialty\": \"Esprinter y gregario\",\n  \"birthplace\": \"Colombia\",\n  \"titles\": 2,\n  \"birthdate\": \"2009-10-03\",\n  \"teamId\": 98\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - 404",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/cyclists/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Cyclist not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Narváez\",\n  \"specialty\": \"Esprinter y gregario\",\n  \"birthplace\": \"Colombia\",\n  \"titles\": 2,\n  \"birthdate\": \"2009-10-03\",\n  \"teamId\": 98\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - ok",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/cyclists/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'message' esperado\npw.test(\"Body contains success message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"cyclist modified correctly\");\n});\n\n// Test 3: Body.cyclist existe y tiene la propiedad 'name' con valor 'UAE'\npw.test(\"Cyclist object has correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.cyclist.name).toBe(\"Pogaçar\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Narváez\",\n  \"specialty\": \"Esprinter y gregario\",\n  \"birthplace\": \"Colombia\",\n  \"titles\": 2,\n  \"birthdate\": \"2009-10-03\",\n  \"teamId\": 98\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "cyclists - 400",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/cyclists/4",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 400\npw.test(\"Status code is 400\", () => {\n  pw.expect(pw.response.status).toBe(400);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 400\npw.test(\"Body contains error code 400\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(400);\n});\n\n// Test 3: Body contiene el mensaje de error correcto\npw.test(\"Body contains correct error message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"The 'name' field cannot be empty\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"\",\n  \"specialty\": \"Esprinter y gregario\",\n  \"birthplace\": \"Colombia\",\n  \"titles\": 2,\n  \"birthdate\": \"2009-10-03\",\n  \"teamId\": 98\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_menvx6w5_77419f1d-827b-4be4-965b-f594a2e92759"
+    },
+    {
+      "v": 6,
+      "name": "stages",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "AllStages",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/stages",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Check status code is 200\npw.test(\"Status code is 200\", ()=> {\n    pw.expect(pw.response.status).toBe(200);\n});\n//Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers; // array de headers\n  let contentType = \"\";\n\n  // Buscamos el header 'content-type' (case-insensitive)\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n\n  // Verificamos que contenga \"application/json\"\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Body no vacío\npw.test(\"Response returns data\", () => {\n  // verificamos que el body no esté vacío\n  pw.expect(pw.response.body.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - ok",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/stages",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "\n\n// Check status code is 2xx\npw.test(\"Status code is 201\", ()=> {\n    pw.expect(pw.response.status).toBe(201);\n});\n\n// Test 2: Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers;\n  let contentType = \"\";\n\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Test 3: Body contiene datos\npw.test(\"Response contains data\", () => {\n  const bodyString = String(pw.response.body || \"\");\n  pw.expect(bodyString.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"Sant Luz\",\n    \"arrival\": \"Gedre\",\n    \"type\": \"alta montaña\",\n    \"elevation\": 4800,\n    \"kilometers\": 150,\n    \"mountainstage\": true,\n    \"stagedate\": \"2025-06-30\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 400",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/stages",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 3: Body contiene mensaje de error\npw.test(\"Body contains error message\", () => {\n  const body = pw.response.body;\n\n  // Comprobamos que exista la propiedad 'error' y contenga texto\n  pw.expect(body.error !== undefined).toBe(true); \n  pw.expect(body.error).toBe(\"Datos inválidos\");\n\n  // Comprobamos la propiedad 'detalle'\n  pw.expect(body.detalle !== undefined).toBe(true);\n  pw.expect(body.detalle).toBe(\"The 'departure' field is required\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"\",\n  \"arrival\": \"Niza\",\n  \"kilometers\": 220.0\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 500",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/stages/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 404",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/stages/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Stage not found\");\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - ok",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/stages/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 204\npw.test(\"Status code is 204\", () => {\n  pw.expect(pw.response.status).toBe(204);\n});\n\n// Test 2: Body vacío (No Content)\npw.test(\"Response body is empty\", () => {\n  const body = pw.response.body;\n  pw.expect(body === null || body === \"\" || body === undefined).toBe(true);\n});\n\n// Test 3: Content-Length = 0 (cuando el servidor lo envía)\npw.test(\"Content-Length header is 0\", () => {\n  const headersArray = pw.response.headers;\n  let contentLength = \"\";\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-length\") {\n      contentLength = headersArray[i].value;\n      break;\n    }\n  }\n  // Puede que algunos servidores no envíen content-length en 204, por eso se permite \"0\" o vacío\n  pw.expect(contentLength === \"0\" || contentLength === \"\").toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 500",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/stages/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": ""
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 404",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/stages/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Stage not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": ""
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - ok",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/stages/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'departure' con valor 'Sant Luz'\npw.test(\"Body contains correct departure\", () => {\n  const body = pw.response.body;\n  pw.expect(body.departure).toBe(\"Sant Luz\");\n});\n\n// Test 3: Body contiene la propiedad 'kilometers' y es un número mayor que 0\npw.test(\"Kilometers is a positive number\", () => {\n  const body = pw.response.body;\n  pw.expect(typeof body.kilometers).toBe(\"number\");\n  pw.expect(body.kilometers > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": ""
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 500",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/stages/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"Montpellier\",\n  \"arrival\": \"Mont Ventoux\",\n  \"type\": \"rompepiernas\",\n  \"kilometers\": 214,\n  \"stageDate\": \"2025-10-07\",\n  \"longitude\": 41.354,\n  \"latitude\": -87.142\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 404",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/stages/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Stage not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"Montpellier\",\n  \"arrival\": \"Mont Ventoux\",\n  \"type\": \"rompepiernas\",\n  \"kilometers\": 214,\n  \"stageDate\": \"2025-10-07\",\n  \"longitude\": 41.354,\n  \"latitude\": -87.142\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - ok",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/stages/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'message' esperado\npw.test(\"Body contains success message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"stage modified correctly\");\n});\n\n// Test 3: Body.team existe y tiene la propiedad 'departure' con valor 'Sant Luz'\npw.test(\"Stage object has correct departure\", () => {\n  const body = pw.response.body;\n  pw.expect(body.stage.departure).toBe(\"Sant Luz\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"Montpellier\",\n  \"arrival\": \"Mont Ventoux\",\n  \"type\": \"rompepiernas\",\n  \"kilometers\": 214,\n  \"stageDate\": \"2025-10-07\",\n  \"longitude\": 41.354,\n  \"latitude\": -87.142\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 400",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/stages/4",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 400\npw.test(\"Status code is 400\", () => {\n  pw.expect(pw.response.status).toBe(400);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 400\npw.test(\"Body contains error code 400\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(400);\n});\n\n// Test 3: Body contiene el mensaje de error correcto\npw.test(\"Body contains correct error message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"The 'departure' field cannot be empty\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"departure\": \"\",\n  \"arrival\": \"Mont Ventoux\",\n  \"type\": \"rompepiernas\",\n  \"kilometers\": 214,\n  \"stageDate\": \"2025-10-07\",\n  \"longitude\": 41.354,\n  \"latitude\": -87.142\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_menvx6w5_43201b25-c541-4b34-aae9-55dbe22071c3"
+    },
+    {
+      "v": 6,
+      "name": "climbs",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "AllClimbs",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/climbs",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Check status code is 200\npw.test(\"Status code is 200\", ()=> {\n    pw.expect(pw.response.status).toBe(200);\n});\n//Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers; // array de headers\n  let contentType = \"\";\n\n  // Buscamos el header 'content-type' (case-insensitive)\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n\n  // Verificamos que contenga \"application/json\"\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Body no vacío\npw.test(\"Response returns data\", () => {\n  // verificamos que el body no esté vacío\n  pw.expect(pw.response.body.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 404",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/stages/2/climbs",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains error code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje de error correcto\npw.test(\"Body contains correct error message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Stage not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n\n  \"name\": \"Le Col\",\n  \"category\": \"Hors Category\",\n  \"region\": \"Alps\",\n  \"slope\": 1000,\n  \"altitude\": 2.400,\n  \"lastAscent\": \"2018-07-21\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - ok",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/stages/3/climbs",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "\n\n// Check status code is 2xx\npw.test(\"Status code is 201\", ()=> {\n    pw.expect(pw.response.status).toBe(201);\n});\n\n// Test 2: Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers;\n  let contentType = \"\";\n\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Test 3: Body contiene datos\npw.test(\"Response contains data\", () => {\n  const bodyString = String(pw.response.body || \"\");\n  pw.expect(bodyString.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n\n  \"name\": \"Galibier\",\n    \"category\": \"Hors Category\",\n    \"region\": \"Alpes\",\n    \"slope\": 1900,\n    \"lastascent\": \"2023-06-15\",\n    \"stageid\": 3\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "stages - 400",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/stages/4/climbs",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 3: Body contiene mensaje de error\npw.test(\"Body contains error message\", () => {\n  const body = pw.response.body;\n\n  // Comprobamos que exista la propiedad 'error' y contenga texto\n  pw.expect(body.error !== undefined).toBe(true); \n  pw.expect(body.error).toBe(\"Datos inválidos\");\n\n  // Comprobamos la propiedad 'detalle'\n  pw.expect(body.detalle !== undefined).toBe(true);\n  pw.expect(body.detalle).toBe(\"The 'name' field is required\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n\n    \"name\": \"\",\n    \"category\": \"Hors Category\",\n    \"region\": \"Alpes\",\n    \"slope\": 1900,\n    \"lastascent\": \"2023-06-15\",\n    \"stageid\": 3\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - 500",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/climbs/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - 404",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/climbs/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Climb not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - ok",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/climbs/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 204\npw.test(\"Status code is 204\", () => {\n  pw.expect(pw.response.status).toBe(204);\n});\n\n// Test 2: Body vacío (No Content)\npw.test(\"Response body is empty\", () => {\n  const body = pw.response.body;\n  pw.expect(body === null || body === \"\" || body === undefined).toBe(true);\n});\n\n// Test 3: Content-Length = 0 (cuando el servidor lo envía)\npw.test(\"Content-Length header is 0\", () => {\n  const headersArray = pw.response.headers;\n  let contentLength = \"\";\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-length\") {\n      contentLength = headersArray[i].value;\n      break;\n    }\n  }\n  // Puede que algunos servidores no envíen content-length en 204, por eso se permite \"0\" o vacío\n  pw.expect(contentLength === \"0\" || contentLength === \"\").toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - 500",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/climbs/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - 404",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/climbs/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Climb not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - ok",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/climbs/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'name' con valor 'Galibier'\npw.test(\"Body contains correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.name).toBe(\"Galibier\");\n});\n\n// Test 3: Body contiene la propiedad 'slope' y es un número mayor que 0\npw.test(\"Slope is a positive number\", () => {\n  const body = pw.response.body;\n  pw.expect(typeof body.slope).toBe(\"number\");\n  pw.expect(body.slope > 0).toBe(true);\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - 500",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/climbs/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Troumousse\",\n  \"category\": \"Hors Category\",\n  \"region\": \"Pyrenees\",\n  \"altitude\": 2.100,\n  \"lastAscent\": \"2005-07-21\",\n  \"stageId\": 2\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - 404",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/climbs/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Climb not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Troumousse\",\n  \"category\": \"Hors Category\",\n  \"region\": \"Pyrenees\",\n  \"altitude\": 2.100,\n  \"lastAscent\": \"2005-07-21\",\n  \"stageId\": 2\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - ok",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/climbs/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'message' esperado\npw.test(\"Body contains success message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"climb modified correctly\");\n});\n\n// Test 3: Body.climb existe y tiene la propiedad 'name' con valor 'Galibier'\npw.test(\"Climb object has correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.climb.name).toBe(\"Galibier\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Galibier\",\n    \"category\": \"Hors Category\",\n    \"region\": \"Alpes\",\n    \"slope\": 1900,\n    \"lastascent\": \"2023-06-15\",\n    \"stageid\": 3\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "climbs - 400",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/climbs/4",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 400\npw.test(\"Status code is 400\", () => {\n  pw.expect(pw.response.status).toBe(400);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 400\npw.test(\"Body contains error code 400\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(400);\n});\n\n// Test 3: Body contiene el mensaje de error correcto\npw.test(\"Body contains correct error message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"The 'name' field cannot be empty\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n    \"name\": \"\",\n    \"category\": \"Hors Category\",\n    \"region\": \"Alpes\",\n    \"slope\": 1900,\n    \"lastascent\": \"2023-06-15\",\n    \"stageid\": 3\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_menvx6w5_27c04888-4606-4445-879e-d0335aff9003"
+    },
+    {
+      "v": 6,
+      "name": "sponsors",
+      "folders": [],
+      "requests": [
+        {
+          "v": "11",
+          "name": "AllSponsors",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/sponsors",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Check status code is 200\npw.test(\"Status code is 200\", ()=> {\n    pw.expect(pw.response.status).toBe(200);\n});\n//Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers; // array de headers\n  let contentType = \"\";\n\n  // Buscamos el header 'content-type' (case-insensitive)\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n\n  // Verificamos que contenga \"application/json\"\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Body no vacío\npw.test(\"Response returns data\", () => {\n  // verificamos que el body no esté vacío\n  pw.expect(pw.response.body.length > 0).toBe(true);\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 404",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/2/sponsors",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Sponsor not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Sponsor not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Decathlon\",\n  \"country\": \"Francia\",\n  \"email\": \"decathlon@france.es\",\n  \"employees\": 8.500,\n  \"funding\": 60.00,\n  \"endContract\": \"2025-12-12\",\n  \"mainSponsor\": true\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - ok",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/3/sponsors",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "\n\n// Check status code is 2xx\npw.test(\"Status code is 201\", ()=> {\n    pw.expect(pw.response.status).toBe(201);\n});\n\n// Test 2: Content-Type incluye application/json\npw.test(\"Content-Type is application/json\", () => {\n  const headersArray = pw.response.headers;\n  let contentType = \"\";\n\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-type\") {\n      contentType = headersArray[i].value;\n      break;\n    }\n  }\n  pw.expect(contentType.includes(\"application/json\")).toBe(true);\n});\n\n// Test 3: Body contiene datos\npw.test(\"Response contains data\", () => {\n  const bodyString = String(pw.response.body || \"\");\n  pw.expect(bodyString.length > 0).toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n    \"name\": \"UAD\",\n    \"country\": \"Emiratos Arabes\",\n    \"email\": \"uad@uad.com\",\n    \"employes\": 1500,\n    \"funding\": 150,\n    \"endcontract\": \"2028-06-30\",\n    \"teamid\": 65\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "teams - 400",
+          "method": "POST",
+          "endpoint": "<<host>><<port>>/teams/4/sponsors",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 3: Body contiene mensaje de error\npw.test(\"Body contains error message\", () => {\n  const body = pw.response.body;\n\n  // Comprobamos que exista la propiedad 'error' y contenga texto\n  pw.expect(body.error !== undefined).toBe(true); \n  pw.expect(body.error).toBe(\"Datos inválidos\");\n\n  // Comprobamos la propiedad 'detalle'\n  pw.expect(body.detalle !== undefined).toBe(true);\n  pw.expect(body.detalle).toBe(\"The 'name' field is required\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"\",\n  \"country\": \"Francia\",\n  \"email\": \"decathlon@france.es\",\n  \"employees\": 8.500,\n  \"funding\": 60.00,\n  \"endContract\": \"2025-12-12\",\n  \"mainSponsor\": true\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - 500",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/sponsors/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - 404",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/sponsors/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Sponsor not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - ok",
+          "method": "GET",
+          "endpoint": "<<host>><<port>>/sponsors/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'name' con valor 'UAD'\npw.test(\"Body contains correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.name).toBe(\"UAD\");\n});\n\n// Test 3: Body contiene la propiedad 'funding' y es un número mayor que 0\npw.test(\"Funding is a positive number\", () => {\n  const body = pw.response.body;\n  pw.expect(typeof body.funding).toBe(\"number\");\n  pw.expect(body.funding > 0).toBe(true);\n});\n",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - 500",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/sponsors/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - 404",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/sponsors/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Sponsor not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - ok",
+          "method": "DELETE",
+          "endpoint": "<<host>><<port>>/sponsors/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 204\npw.test(\"Status code is 204\", () => {\n  pw.expect(pw.response.status).toBe(204);\n});\n\n// Test 2: Body vacío (No Content)\npw.test(\"Response body is empty\", () => {\n  const body = pw.response.body;\n  pw.expect(body === null || body === \"\" || body === undefined).toBe(true);\n});\n\n// Test 3: Content-Length = 0 (cuando el servidor lo envía)\npw.test(\"Content-Length header is 0\", () => {\n  const headersArray = pw.response.headers;\n  let contentLength = \"\";\n  for (let i = 0; i < headersArray.length; i++) {\n    if (headersArray[i].key.toLowerCase() === \"content-length\") {\n      contentLength = headersArray[i].value;\n      break;\n    }\n  }\n  // Puede que algunos servidores no envíen content-length en 204, por eso se permite \"0\" o vacío\n  pw.expect(contentLength === \"0\" || contentLength === \"\").toBe(true);\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - 500",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/sponsors/1",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 500\npw.test(\"Status code is 500\", () => {\n  pw.expect(pw.response.status).toBe(500);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 500\npw.test(\"Body contains code 500\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(500);\n});\n\n// Test 3: Body contiene el mensaje 'Internal Server Error'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Internal Server Error\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Telefónica\",\n  \"country\": \"Francia\",\n  \"email\": \"decathlon@decathlon.com\",\n  \"funding\": 60.00,\n  \"endContract\": \"2025-12-12\",\n  \"teamId\": 65\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - 404",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/sponsors/2",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 404\npw.test(\"Status code is 404\", () => {\n  pw.expect(pw.response.status).toBe(404);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 404\npw.test(\"Body contains code 404\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(404);\n});\n\n// Test 3: Body contiene el mensaje 'Team not found'\npw.test(\"Body contains correct message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"Sponsor not found\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Telefónica\",\n  \"country\": \"Francia\",\n  \"email\": \"decathlon@decathlon.com\",\n  \"funding\": 60.00,\n  \"endContract\": \"2025-12-12\",\n  \"teamId\": 65\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - ok",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/sponsors/3",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 200\npw.test(\"Status code is 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\n// Test 2: Body contiene el campo 'message' esperado\npw.test(\"Body contains success message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"sponsor modified correctly\");\n});\n\n// Test 3: Body.sponsor existe y tiene la propiedad 'name' con valor 'UAD'\npw.test(\"Sponsor object has correct name\", () => {\n  const body = pw.response.body;\n  pw.expect(body.sponsor.name).toBe(\"UAD\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"UAD\",\n    \"country\": \"Emiratos Arabes\",\n    \"email\": \"uad@uad.com\",\n    \"employes\": 1500,\n    \"funding\": 150,\n    \"endcontract\": \"2028-06-30\",\n    \"teamid\": 65\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "11",
+          "name": "sponsors - 400",
+          "method": "PUT",
+          "endpoint": "<<host>><<port>>/sponsors/4",
+          "params": [],
+          "headers": [
+            {
+              "key": "X-API-Key",
+              "value": "<<api-key>>",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "// Test 1: Status code 400\npw.test(\"Status code is 400\", () => {\n  pw.expect(pw.response.status).toBe(400);\n});\n\n// Test 2: Body contiene la propiedad 'code' con valor 400\npw.test(\"Body contains error code 400\", () => {\n  const body = pw.response.body;\n  pw.expect(body.code).toBe(400);\n});\n\n// Test 3: Body contiene el mensaje de error correcto\npw.test(\"Body contains correct error message\", () => {\n  const body = pw.response.body;\n  pw.expect(body.message).toBe(\"The 'name' field cannot be empty\");\n});",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ3NDE3NTU4LCJleHAiOjE3NDc0MjExNTh9.Y2ya6dg_Zj9CiHpAB6O0Mmo5kMPUAtClz0b9Q5jL46E",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n    \"name\": \"\",\n    \"country\": \"Emiratos Arabes\",\n    \"email\": \"uad@uad.com\",\n    \"employes\": 1500,\n    \"funding\": 150,\n    \"endcontract\": \"2028-06-30\",\n    \"teamid\": 65\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_menvx6w5_e0aeec79-96b8-4715-bdc1-e00a5b435cbe"
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [],
+  "_ref_id": "coll_menvx6w4_1f2e2c96-6f1b-4bb3-b264-213fe1b488a6"
+}

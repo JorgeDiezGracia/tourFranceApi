@@ -1,0 +1,30 @@
+[
+  {
+    "departure": "Sant Luz",
+    "arrival": "Gedre",
+    "type": "alta montaña",
+    "elevation": 4800,
+    "kilometers": 150,
+    "mountainstage": true,
+    "stagedate": "2025-06-30"
+  },
+  {
+    "departure": "Niza",
+    "arrival": "Monaco",
+    "type": "llana",
+    "elevation": 1300,
+    "kilometers": 210,
+    "mountainstage": false,
+    "stagedate": "2025-06-24"
+  },
+  {
+    "departure": "Formigal",
+    "arrival": "Lourdes",
+    "type": "alta montaña",
+    "elevation": 4500,
+    "kilometers": 160,
+    "mountainstage": true,
+    "stagedate": "2025-06-28"
+  }
+
+]

@@ -1,0 +1,13 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "DELETE",
+    "urlPattern": "/climbs/3"
+  },
+  "response": {
+    "status": 204,
+    "headers":{
+      "Content-Type": "application/json"
+    }
+  }
+}

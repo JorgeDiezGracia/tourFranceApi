@@ -1,6 +1,7 @@
 package com.svalero.tourfrance.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,15 +23,14 @@ public class Team {
     @Column
     private String name;
     @Column
-    private String email;
-    @Column
     private String country;
+    @Column
+    private String email;
     @Column
     private float budget;
     @Column(name="fundation_date")
     private LocalDate fundationDate;
-
     @OneToMany(mappedBy = "team")
-    @JsonBackReference(value = "teams_cyclists")
+    @JsonManagedReference(value = "teams_cyclists")
     private List<Cyclist> cyclists;
 }

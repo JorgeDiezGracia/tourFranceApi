@@ -1,0 +1,17 @@
+{
+
+  "request": {
+    "method": "POST",
+    "url": "/teams",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$[?(!@.nombre || @.nombre == '')]" }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "bodyFileName": "team/postTeam-400-4.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

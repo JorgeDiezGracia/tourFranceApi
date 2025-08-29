@@ -1,6 +1,7 @@
 package com.svalero.tourfrance.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,7 +39,7 @@ public class Cyclist {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
-    @JsonManagedReference(value = "teams_cyclists")
+    @JsonBackReference(value = "teams_cyclists")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Team team;
 }

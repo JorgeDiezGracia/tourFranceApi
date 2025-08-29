@@ -1,0 +1,21 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "PUT",
+    "urlPattern": "/teams/3",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$[?(@.name =~ /^(?!\\s*$).+/)]",
+        "matchesJsonPath": "$[?(@.country =~ /^(?!\\s*$).+/)]",
+        "matchesJsonPath": "$[?(@.budget >=0)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "team/putTeam-ok-3.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+
+  "request": {
+    "method": "POST",
+    "url": "/stages",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$[?(!@.departure || @.departure == '')]" }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "bodyFileName": "stage/postStage-400-4.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

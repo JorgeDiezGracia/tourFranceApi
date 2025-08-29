@@ -1,0 +1,14 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "url": "/teams"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "team/getAllTeams-ok-3.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

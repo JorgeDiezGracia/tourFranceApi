@@ -1,0 +1,19 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "PUT",
+    "urlPattern": "/teams/4",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$[?(@.name =~ /^\\s*$/)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "bodyFileName": "team/putTeam-400-4.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
